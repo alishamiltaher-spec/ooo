@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<title>نور الدعاء 🌙</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#0a0e1a;--bg2:#0f1628;--bg3:#141c35;
+  --gold:#c9a84c;--gold2:#e8c96a;--gold3:#f5dfa0;
+  --green:#1a7a4a;--green2:#25a86a;
+  --red:#8b1a2a;--red2:#c0392b;
+  --white:#f0e8d0;--muted:#7a8aaa;
+  --card:#141c35;--border:rgba(201,168,76,.2);
+}
+html,body{height:100%;background:var(--bg);color:var(--white);font-family:Tahoma,Arial,sans-serif;overflow:hidden;}
+body{display:flex;flex-direction:column;}
+
+/* ── STARS BG ── */
+.stars{position:fixed;inset:0;z-index:0;pointer-events:none;}
+.star{position:absolute;border-radius:50%;background:#fff;animation:twinkle ease-in-out infinite;}
+@keyframes twinkle{0%,100%{opacity:.1;}50%{opacity:.9;}}
+
+/* ── SCREENS ── */
+.screen{display:none;flex:1;overflow-y:auto;overflow-x:hidden;padding-bottom:90px;position:relative;z-index:1;}
+.screen.active{display:block;}
+.screen::-webkit-scrollbar{width:3px;}
+.screen::-webkit-scrollbar-thumb{background:var(--gold);border-radius:3px;}
+
+/* ── TAB BAR ── */
+.tabbar{
+  position:fixed;bottom:0;left:0;right:0;z-index:9999;
+  display:flex;background:var(--bg2);
+  border-top:1px solid var(--border);
+  box-shadow:0 -4px 20px rgba(0,0,0,.5);
+}
+.tab{flex:1;display:flex;flex-direction:column;align-items:center;padding:10px 4px 8px;cursor:pointer;
+  color:var(--muted);font-size:9px;font-weight:700;gap:3px;border-top:2px solid transparent;transition:all .2s;}
+.tab.active{color:var(--gold);border-top-color:var(--gold);}
+.tab-ic{font-size:20px;}
+
+/* ── HOME ── */
+.home-hero{
+  background:linear-gradient(160deg,#060a14 0%,#0e1528 50%,#0a1020 100%);
+  padding:28px 18px 24px;text-align:center;position:relative;overflow:hidden;
+  border-bottom:1px solid var(--border);
+}
+.hero-moon{font-size:64px;display:inline-block;animation:moonGlow 4s ease-in-out infinite;margin-bottom:8px;}
+@keyframes moonGlow{0%,100%{filter:drop-shadow(0 0 8px var(--gold));}50%{filter:drop-shadow(0 0 20px var(--gold2));}}
+.hero-title{font-size:28px;font-weight:900;color:var(--gold2);margin-bottom:4px;letter-spacing:2px;}
+.hero-sub{font-size:12px;color:var(--muted);}
+.hero-date{margin-top:10px;display:inline-block;background:rgba(201,168,76,.1);border:1px solid var(--border);border-radius:99px;padding:5px 18px;font-size:12px;color:var(--gold);}
+
+/* PRAYER TIMES CARD */
+.pt-card{
+  margin:16px;background:var(--card);border-radius:20px;
+  border:1px solid var(--border);overflow:hidden;
+  box-shadow:0 4px 20px rgba(0,0,0,.4);
+}
+.pt-header{
+  background:linear-gradient(135deg,#1a1000,#2a1e00);
+  padding:12px 16px;display:flex;align-items:center;justify-content:space-between;
+  border-bottom:1px solid var(--border);
+}
+.pt-title{font-size:13px;font-weight:900;color:var(--gold);}
+.pt-city{font-size:11px;color:var(--muted);}
+.pt-loading{text-align:center;padding:20px;color:var(--muted);font-size:12px;}
+.pt-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);}
+.pt-item{background:var(--card);padding:12px;text-align:center;}
+.pt-item.next{background:linear-gradient(135deg,rgba(201,168,76,.15),rgba(201,168,76,.05));}
+.pt-name{font-size:10px;color:var(--muted);margin-bottom:4px;}
+.pt-time{font-size:16px;font-weight:900;color:var(--gold2);}
+.pt-item.next .pt-time{color:var(--gold3);}
+.pt-next-badge{font-size:9px;background:var(--gold);color:#000;padding:1px 6px;border-radius:99px;font-weight:900;margin-top:3px;display:inline-block;}
+
+/* SECTION CARDS on home */
+.home-sections{padding:0 16px;}
+.hs-title{font-size:12px;font-weight:700;color:var(--muted);margin:16px 0 10px;letter-spacing:.08em;}
+.hs-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px;}
+.hs-card{
+  background:var(--card);border-radius:16px;padding:16px 12px;text-align:center;
+  border:1px solid var(--border);cursor:pointer;transition:all .2s;
+  animation:fadeUp .4s ease both;
+}
+.hs-card:active{transform:scale(.96);}
+.hs-card:hover{border-color:var(--gold);background:#1a2040;}
+.hs-icon{font-size:36px;margin-bottom:8px;display:block;}
+.hs-name{font-size:13px;font-weight:700;color:var(--white);}
+.hs-count{font-size:10px;color:var(--muted);margin-top:3px;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+
+/* ── CONTENT SCREENS ── */
+.content-hdr{
+  position:sticky;top:0;z-index:50;
+  background:linear-gradient(180deg,var(--bg) 80%,transparent);
+  padding:14px 16px 10px;
+  border-bottom:1px solid var(--border);
+}
+.ch-back{background:none;border:1px solid var(--border);color:var(--gold);padding:6px 14px;border-radius:10px;font-family:Tahoma,Arial,sans-serif;font-size:12px;font-weight:700;cursor:pointer;margin-bottom:8px;}
+.ch-title{font-size:18px;font-weight:900;color:var(--gold2);}
+.ch-sub{font-size:11px;color:var(--muted);margin-top:2px;}
+
+/* DUA CARDS */
+.dua-list{padding:12px 16px;}
+.dua-card{
+  background:var(--card);border-radius:18px;margin-bottom:12px;
+  border:1px solid var(--border);overflow:hidden;
+  animation:fadeUp .3s ease both;
+}
+.dua-header{
+  display:flex;align-items:center;gap:10px;padding:14px;
+  cursor:pointer;background:linear-gradient(135deg,var(--bg2),var(--bg3));
+}
+.dua-num{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--gold),var(--gold2));color:#000;font-size:11px;font-weight:900;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.dua-hd-info{flex:1;}
+.dua-hd-title{font-size:14px;font-weight:700;color:var(--white);}
+.dua-hd-time{font-size:10px;color:var(--gold);margin-top:2px;}
+.dua-arrow{color:var(--gold);font-size:16px;transition:transform .3s;}
+.dua-card.open .dua-arrow{transform:rotate(90deg);}
+.dua-body{display:none;padding:16px;border-top:1px solid var(--border);}
+.dua-card.open .dua-body{display:block;animation:fadeIn .2s ease;}
+@keyframes fadeIn{from{opacity:0;}to{opacity:1;}}
+.dua-arabic{
+  font-size:18px;line-height:2.2;color:var(--gold3);text-align:center;
+  background:rgba(201,168,76,.05);border-radius:12px;padding:14px;
+  margin-bottom:10px;border:1px solid rgba(201,168,76,.15);
+}
+.dua-trans{font-size:12px;line-height:1.9;color:var(--muted);}
+.dua-source{font-size:10px;color:var(--gold);margin-top:8px;text-align:left;}
+
+/* TASBIH */
+.tasbih-wrap{padding:16px;}
+.tasbih-display{
+  background:var(--card);border-radius:24px;padding:28px;text-align:center;
+  border:1px solid var(--border);margin-bottom:16px;
+  box-shadow:0 4px 24px rgba(0,0,0,.4);
+}
+.tasbih-name{font-size:14px;color:var(--gold);margin-bottom:6px;font-weight:700;}
+.tasbih-arabic{font-size:22px;color:var(--gold3);margin-bottom:16px;line-height:1.8;}
+.tasbih-count{font-size:72px;font-weight:900;color:var(--gold2);line-height:1;margin-bottom:4px;}
+.tasbih-target{font-size:12px;color:var(--muted);}
+.tasbih-progress{height:6px;background:rgba(201,168,76,.15);border-radius:99px;overflow:hidden;margin:12px 0;}
+.tasbih-prog-fill{height:6px;background:linear-gradient(90deg,var(--gold),var(--gold2));border-radius:99px;transition:width .3s;}
+.tasbih-btn{
+  width:100%;padding:18px;border:none;border-radius:16px;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  color:#000;font-family:Tahoma,Arial,sans-serif;font-size:18px;font-weight:900;
+  cursor:pointer;box-shadow:0 4px 16px rgba(201,168,76,.3);
+  transition:transform .1s;active-transform:scale(.97);
+}
+.tasbih-btn:active{transform:scale(.96);}
+.tasbih-reset{background:none;border:1px solid var(--border);color:var(--muted);padding:10px 24px;border-radius:12px;font-family:Tahoma,Arial,sans-serif;font-size:13px;cursor:pointer;margin-top:10px;width:100%;}
+
+.tasbih-tabs{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:16px;}
+.ttab{
+  background:var(--card);border:1px solid var(--border);border-radius:12px;
+  padding:10px 6px;text-align:center;cursor:pointer;transition:all .2s;
+  font-size:11px;color:var(--muted);font-weight:700;
+}
+.ttab.active{background:rgba(201,168,76,.15);border-color:var(--gold);color:var(--gold);}
+
+/* ISTIGHFAR */
+.istighfar-wrap{padding:16px;}
+.istgh-card{
+  background:var(--card);border-radius:24px;padding:24px;text-align:center;
+  border:1px solid var(--border);margin-bottom:14px;
+}
+.istgh-arabic{font-size:20px;color:var(--gold3);line-height:2;margin-bottom:10px;}
+.istgh-count{font-size:64px;font-weight:900;color:var(--green2);line-height:1;margin:10px 0 4px;}
+.istgh-label{font-size:12px;color:var(--muted);}
+.istgh-btn{
+  width:100%;padding:16px;border:none;border-radius:16px;
+  background:linear-gradient(135deg,var(--green),var(--green2));
+  color:#fff;font-family:Tahoma,Arial,sans-serif;font-size:17px;font-weight:900;
+  cursor:pointer;margin-bottom:8px;
+}
+.istgh-btn:active{transform:scale(.97);}
+.istgh-reset{background:none;border:1px solid var(--border);color:var(--muted);padding:10px;border-radius:12px;font-family:Tahoma,Arial,sans-serif;font-size:13px;cursor:pointer;width:100%;}
+
+/* SCROLL CUSTOM */
+::-webkit-scrollbar{width:3px;}
+::-webkit-scrollbar-thumb{background:var(--gold);border-radius:3px;}
+
+/* Ornament divider */
+.ornament{text-align:center;color:var(--gold);font-size:14px;margin:6px 0;letter-spacing:4px;}
+</style>
+</head>
+<body>
+
+<!-- STARS -->
+<div class="stars" id="starsEl"></div>
+
+<!-- SCREENS -->
+<!-- HOME -->
+<div class="screen active" id="scHome">
+  <div class="home-hero">
+    <div class="hero-moon">🌙</div>
+    <div class="hero-title">نـور الدعـاء</div>
+    <div class="hero-sub">أدعية وأذكار شيعية متكاملة</div>
+    <div class="hero-date" id="heroDate">جارٍ تحميل التاريخ...</div>
+  </div>
+
+  <!-- Prayer Times -->
+  <div class="pt-card">
+    <div class="pt-header">
+      <div class="pt-title">🕌 مواقيت الصلاة</div>
+      <div class="pt-city">📍 كربلاء المقدسة</div>
+    </div>
+    <div id="ptContent" class="pt-loading">⏳ جارٍ تحميل أوقات الصلاة...</div>
+  </div>
+
+  <div class="home-sections">
+    <div class="hs-title">✦ الأقسام</div>
+    <div class="hs-grid">
+      <div class="hs-card" onclick="openSection('daily')" style="animation-delay:.05s">
+        <span class="hs-icon">📿</span>
+        <div class="hs-name">أدعية الأيام</div>
+        <div class="hs-count">٧ أدعية</div>
+      </div>
+      <div class="hs-card" onclick="openSection('taaqib')" style="animation-delay:.1s">
+        <span class="hs-icon">🤲</span>
+        <div class="hs-name">تعقيبات الصلاة</div>
+        <div class="hs-count">٥ تعقيبات</div>
+      </div>
+      <div class="hs-card" onclick="openSection('diverse')" style="animation-delay:.15s">
+        <span class="hs-icon">🌹</span>
+        <div class="hs-name">أدعية متنوعة</div>
+        <div class="hs-count">٨ أدعية</div>
+      </div>
+      <div class="hs-card" onclick="openSection('tasbih')" style="animation-delay:.2s">
+        <span class="hs-icon">📖</span>
+        <div class="hs-name">تسبيح الزهراء ع</div>
+        <div class="hs-count">٣٤+٣٣+٣٣</div>
+      </div>
+      <div class="hs-card" onclick="openSection('istighfar')" style="animation-delay:.25s" style="grid-column:span 2">
+        <span class="hs-icon">🕊️</span>
+        <div class="hs-name">الاستغفار</div>
+        <div class="hs-count">عداد الاستغفار</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- DAILY DUAS -->
+<div class="screen" id="scDaily">
+  <div class="content-hdr">
+    <button class="ch-back" onclick="goHome()">← رجوع</button>
+    <div class="ch-title">📿 أدعية الأيام</div>
+    <div class="ch-sub">دعاء مخصص لكل يوم من أيام الأسبوع</div>
+  </div>
+  <div class="dua-list" id="dailyList"></div>
+</div>
+
+<!-- TAAQIB -->
+<div class="screen" id="scTaaqib">
+  <div class="content-hdr">
+    <button class="ch-back" onclick="goHome()">← رجوع</button>
+    <div class="ch-title">🤲 تعقيبات الصلاة</div>
+    <div class="ch-sub">الأذكار والأدعية بعد كل صلاة</div>
+  </div>
+  <div class="dua-list" id="taaqibList"></div>
+</div>
+
+<!-- DIVERSE DUAS -->
+<div class="screen" id="scDiverse">
+  <div class="content-hdr">
+    <button class="ch-back" onclick="goHome()">← رجوع</button>
+    <div class="ch-title">🌹 أدعية متنوعة</div>
+    <div class="ch-sub">أدعية شيعية مأثورة</div>
+  </div>
+  <div class="dua-list" id="diverseList"></div>
+</div>
+
+<!-- TASBIH -->
+<div class="screen" id="scTasbih">
+  <div class="content-hdr">
+    <button class="ch-back" onclick="goHome()">← رجوع</button>
+    <div class="ch-title">📖 تسبيح الزهراء عليها السلام</div>
+    <div class="ch-sub">٣٤ تكبيرة · ٣٣ تحميدة · ٣٣ تسبيحة</div>
+  </div>
+  <div class="tasbih-wrap">
+    <div class="tasbih-tabs">
+      <div class="ttab active" id="tt0" onclick="setTasbih(0)">الله أكبر<br><span style="color:var(--gold);font-size:13px">٣٤</span></div>
+      <div class="ttab" id="tt1" onclick="setTasbih(1)">الحمد لله<br><span style="color:var(--gold);font-size:13px">٣٣</span></div>
+      <div class="ttab" id="tt2" onclick="setTasbih(2)">سبحان الله<br><span style="color:var(--gold);font-size:13px">٣٣</span></div>
+    </div>
+    <div class="tasbih-display">
+      <div class="tasbih-name" id="tasbihName">التكبير</div>
+      <div class="tasbih-arabic" id="tasbihArabic">اللهُ أَكْبَر</div>
+      <div class="tasbih-count" id="tasbihCount">0</div>
+      <div class="tasbih-target" id="tasbihTarget">من ٣٤</div>
+      <div class="tasbih-progress"><div class="tasbih-prog-fill" id="tasbihFill" style="width:0%"></div></div>
+    </div>
+    <button class="tasbih-btn" onclick="countTasbih()">اضغط للتسبيح ✦</button>
+    <button class="tasbih-reset" onclick="resetTasbih()">🔄 إعادة تعيين</button>
+  </div>
+</div>
+
+<!-- ISTIGHFAR -->
+<div class="screen" id="scIstighfar">
+  <div class="content-hdr">
+    <button class="ch-back" onclick="goHome()">← رجوع</button>
+    <div class="ch-title">🕊️ الاستغفار</div>
+    <div class="ch-sub">أستغفر الله وأتوب إليه</div>
+  </div>
+  <div class="istighfar-wrap">
+    <div class="istgh-card">
+      <div class="ornament">✦ ✦ ✦</div>
+      <div class="istgh-arabic">أَسْتَغْفِرُ اللهَ رَبِّي وَأَتُوبُ إِلَيْهِ</div>
+      <div class="ornament">✦ ✦ ✦</div>
+      <div class="istgh-count" id="istghCount">0</div>
+      <div class="istgh-label">مرة</div>
+    </div>
+    <div style="background:var(--card);border-radius:20px;padding:16px;border:1px solid var(--border);margin-bottom:14px;">
+      <div style="font-size:16px;color:var(--gold3);text-align:center;line-height:2;margin-bottom:10px;">اللَّهُمَّ اغْفِرْ لِيَ الذُّنُوبَ الَّتِي تَهْتِكُ الْعِصَمَ</div>
+      <div style="font-size:11px;color:var(--muted);text-align:center;">من دعاء كميل</div>
+    </div>
+    <button class="istgh-btn" onclick="countIstghfar()">أستغفر الله 🕊️</button>
+    <button class="istgh-reset" onclick="resetIstghfar()">🔄 إعادة تعيين</button>
+  </div>
+</div>
+
+<!-- TAB BAR -->
+<div class="tabbar">
+  <div class="tab active" id="tabHome" onclick="switchTab('Home')">
+    <span class="tab-ic">🏠</span><span>الرئيسية</span>
+  </div>
+  <div class="tab" id="tabTasbih" onclick="openSection('tasbih')">
+    <span class="tab-ic">📖</span><span>تسبيح</span>
+  </div>
+  <div class="tab" id="tabIstighfar" onclick="openSection('istighfar')">
+    <span class="tab-ic">🕊️</span><span>استغفار</span>
+  </div>
+</div>
+
+<script>
+// ══ STARS ══
+(function(){
+  const el=document.getElementById('starsEl');
+  for(let i=0;i<80;i++){
+    const s=document.createElement('div');
+    s.className='star';
+    const sz=Math.random()*2.5+.5;
+    s.style.cssText=`width:${sz}px;height:${sz}px;top:${Math.random()*100}%;left:${Math.random()*100}%;animation-duration:${2+Math.random()*4}s;animation-delay:-${Math.random()*4}s;`;
+    el.appendChild(s);
+  }
+})();
+
+// ══ DATA ══
+const DAILY_DUAS=[
+  {day:'الأحد',arabic:'اللَّهُمَّ يَا مَنْ لَا تُغَيِّرُهُ الأَيَّامُ وَلَا تَأْخُذُهُ سِنَةٌ وَلَا نَوْمٌ،\nصَلِّ عَلَى مُحَمَّدٍ وَآلِ مُحَمَّدٍ،\nوَاغْفِرْ لَنَا وَارْحَمْنَا يَا أَرْحَمَ الرَّاحِمِينَ.',trans:'اللهم يا من لا تغيره الأيام ولا تأخذه سنة ولا نوم، صلّ على محمد وآل محمد، واغفر لنا وارحمنا.',source:'دعاء يوم الأحد'},
+  {day:'الاثنين',arabic:'اللَّهُمَّ إِنِّي أَسْأَلُكَ فِي يَوْمِ الاِثْنَيْنِ اثْنَتَيْنِ:\nحُسْنَ عَاقِبَتِي فِي الأُمُورِ كُلِّهَا،\nوَالنَّجَاةَ مِنَ النَّارِ.',trans:'اللهم إني أسألك في يوم الاثنين اثنتين: حسن عاقبتي في الأمور كلها، والنجاة من النار.',source:'دعاء يوم الاثنين'},
+  {day:'الثلاثاء',arabic:'اللَّهُمَّ يَا مَنْ يَمْلِكُ حَوَائِجَ السَّائِلِينَ،\nوَيَعْلَمُ ضَمِيرَ الصَّامِتِينَ،\nلِكُلِّ مَسْأَلَةٍ مِنْكَ سَمْعٌ حَاضِرٌ وَجَوَابٌ عَتِيدٌ.',trans:'اللهم يا من يملك حوائج السائلين ويعلم ضمير الصامتين، لكل مسألة منك سمع حاضر وجواب عتيد.',source:'دعاء يوم الثلاثاء'},
+  {day:'الأربعاء',arabic:'اللَّهُمَّ إِنِّي أَسْأَلُكَ بِاسْمِكَ الْمَكْنُونِ الْمَخْزُونِ الْحَيِّ الْقَيُّومِ،\nأَنْ تُصَلِّيَ عَلَى مُحَمَّدٍ وَآلِ مُحَمَّدٍ،\nوَأَنْ تَجْعَلَ يَوْمِي هَذَا خَيْرَ أَيَّامِي.',trans:'اللهم إني أسألك باسمك المكنون المخزون الحي القيوم، أن تصلي على محمد وآل محمد، وأن تجعل يومي هذا خير أيامي.',source:'دعاء يوم الأربعاء'},
+  {day:'الخميس',arabic:'اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ وَآلِ مُحَمَّدٍ،\nوَافْتَحْ لِي فِي هَذَا الْيَوْمِ أَبْوَابَ رَحْمَتِكَ،\nوَاجْعَلْنِي مِنْ عِبَادِكَ الصَّالِحِينَ.',trans:'اللهم صلّ على محمد وآل محمد، وافتح لي في هذا اليوم أبواب رحمتك، واجعلني من عبادك الصالحين.',source:'دعاء يوم الخميس'},
+  {day:'الجمعة',arabic:'اللَّهُمَّ إِنَّ هَذَا يَوْمُ الْجُمُعَةِ،\nوَهُوَ يَوْمُ عِيدٍ لِأَوْلِيَائِكَ،\nاللَّهُمَّ اجْعَلْنِي فِيهِ مِنَ الذَّاكِرِينَ لَكَ الشَّاكِرِينَ لَنِعْمَتِكَ.',trans:'اللهم إن هذا يوم الجمعة، وهو يوم عيد لأوليائك، اللهم اجعلني فيه من الذاكرين لك الشاكرين لنعمتك.',source:'دعاء يوم الجمعة'},
+  {day:'السبت',arabic:'اللَّهُمَّ مَنْ أَصْبَحَ وَأَمْسَى يَعْتَصِمُ بِكَ،\nفَكُنْ لَهُ مِنَ الشَّيْطَانِ الرَّجِيمِ حِصْناً حَصِيناً،\nوَاجْعَلْنِي مِنَ الشَّاكِرِينَ لِنِعَمِكَ.',trans:'اللهم من أصبح وأمسى يعتصم بك، فكن له من الشيطان الرجيم حصناً حصيناً، واجعلني من الشاكرين لنعمك.',source:'دعاء يوم السبت'},
+];
+
+const TAAQIB=[
+  {title:'تعقيب الفجر',time:'بعد صلاة الفجر',arabic:'اللَّهُمَّ إِنِّي أَسْأَلُكَ بِحَقِّ هَذَا الصُّبْحِ الْمُبِينِ،\nوَبِحَقِّ مَنْ سَبَّحَ بِحَمْدِكَ مِنَ الْمَلَائِكَةِ الْمُقَرَّبِينَ،\nأَنْ تُصَلِّيَ عَلَى مُحَمَّدٍ وَآلِ مُحَمَّدٍ الطَّيِّبِينَ الطَّاهِرِينَ.',trans:'اللهم إني أسألك بحق هذا الصبح المبين، وبحق من سبّح بحمدك من الملائكة المقربين.',source:'تعقيبات الصلوات'},
+  {title:'تعقيب الظهرين',time:'بعد صلاة الظهر والعصر',arabic:'اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ وَآلِ مُحَمَّدٍ،\nوَأَقِمِ الصَّلَاةَ لِذِكْرِكَ،\nوَلَا تَجْعَلْنِي مِنَ الْغَافِلِينَ.',trans:'اللهم صلّ على محمد وآل محمد، وأقم الصلاة لذكرك، ولا تجعلني من الغافلين.',source:'تعقيبات الصلوات'},
+  {title:'تعقيب المغرب',time:'بعد صلاة المغرب',arabic:'اللَّهُمَّ يَا مَنْ يَمْلِكُ اللَّيْلَ وَالنَّهَارَ،\nوَلَا يَخْفَى عَلَيْهِ شَيْءٌ،\nاجْعَلْ لَيْلَتِي هَذِهِ لَيْلَةً مُبَارَكَةً.',trans:'اللهم يا من يملك الليل والنهار، ولا يخفى عليه شيء، اجعل ليلتي هذه ليلة مباركة.',source:'تعقيبات الصلوات'},
+  {title:'تعقيب العشاء',time:'بعد صلاة العشاء',arabic:'اللَّهُمَّ اخْتِمْ لِي بِالْخَيْرِ،\nوَلَا تَخْتِمْ عَلَيَّ بِالشَّرِّ،\nوَاجْعَلْ عَاقِبَةَ أَمْرِي إِلَى الرُّشْدِ وَالصَّلَاحِ.',trans:'اللهم اختم لي بالخير، ولا تختم عليّ بالشر، واجعل عاقبة أمري إلى الرشد والصلاح.',source:'تعقيبات الصلوات'},
+  {title:'الذكر الجامع',time:'بعد جميع الصلوات',arabic:'سُبْحَانَ اللهِ وَالْحَمْدُ لِلَّهِ وَلَا إِلَهَ إِلَّا اللهُ وَاللهُ أَكْبَرُ،\nوَلَا حَوْلَ وَلَا قُوَّةَ إِلَّا بِاللهِ الْعَلِيِّ الْعَظِيمِ.',trans:'سبحان الله والحمد لله ولا إله إلا الله والله أكبر، ولا حول ولا قوة إلا بالله العلي العظيم.',source:'الذكر الجامع بعد الصلاة'},
+];
+
+const DIVERSE=[
+  {title:'دعاء الصباح',time:'عند الصباح',arabic:'اللَّهُمَّ بِكَ أَصْبَحْنَا وَبِكَ أَمْسَيْنَا،\nوَبِكَ نَحْيَا وَبِكَ نَمُوتُ،\nوَإِلَيْكَ الْمَصِيرُ.',trans:'اللهم بك أصبحنا وبك أمسينا، وبك نحيا وبك نموت، وإليك المصير.',source:'دعاء الصباح'},
+  {title:'دعاء المساء',time:'عند المساء',arabic:'اللَّهُمَّ بِكَ أَمْسَيْنَا وَبِكَ أَصْبَحْنَا،\nوَبِكَ نَحْيَا وَبِكَ نَمُوتُ،\nوَإِلَيْكَ النُّشُورُ.',trans:'اللهم بك أمسينا وبك أصبحنا، وبك نحيا وبك نموت، وإليك النشور.',source:'دعاء المساء'},
+  {title:'دعاء الرزق',time:'في طلب الرزق',arabic:'يَا رَزَّاقُ يَا كَرِيمُ يَا كَافِلَ مَنْ يَشَاءُ بِغَيْرِ حِسَابٍ،\nارْزُقْنِي حَلَالاً طَيِّباً وَوَفِّقْنِي لِشُكْرِكَ.',trans:'يا رزاق يا كريم، يا كافل من يشاء بغير حساب، ارزقني حلالاً طيباً ووفقني لشكرك.',source:'أدعية الرزق'},
+  {title:'الصلاة على النبي وآله',time:'في كل وقت',arabic:'اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ وَآلِ مُحَمَّدٍ،\nكَمَا صَلَّيْتَ عَلَى إِبْرَاهِيمَ وَآلِ إِبْرَاهِيمَ،\nإِنَّكَ حَمِيدٌ مَجِيدٌ.',trans:'اللهم صلّ على محمد وآل محمد كما صليت على إبراهيم وآل إبراهيم، إنك حميد مجيد.',source:'الصلاة الإبراهيمية'},
+  {title:'دعاء الفرج',time:'في طلب الفرج',arabic:'اللَّهُمَّ كُنْ لِوَلِيِّكَ الْحُجَّةِ بْنِ الْحَسَنِ،\nصَلَوَاتُكَ عَلَيْهِ وَعَلَى آبَائِهِ،\nفِي هَذِهِ السَّاعَةِ وَفِي كُلِّ سَاعَةٍ وَلِيَّاً وَحَافِظاً وَقَائِداً وَنَاصِراً.',trans:'اللهم كن لوليك الحجة بن الحسن صلواتك عليه وعلى آبائه في هذه الساعة وفي كل ساعة ولياً وحافظاً وقائداً وناصراً.',source:'دعاء الفرج'},
+  {title:'دعاء التوسل',time:'في التوسل',arabic:'يَا مُحَمَّدُ يَا عَلِيُّ يَا عَلِيُّ يَا مُحَمَّدُ،\nاكْفِيَانِي فَإِنَّكُمَا كَافِيَانِ،\nوَانْصُرَانِي فَإِنَّكُمَا نَاصِرَانِ.',trans:'يا محمد يا علي يا علي يا محمد، اكفياني فإنكما كافيان، وانصراني فإنكما ناصران.',source:'دعاء التوسل'},
+  {title:'دعاء عند النوم',time:'عند النوم',arabic:'اللَّهُمَّ أَنْتَ الأَوَّلُ فَلَا شَيْءَ قَبْلَكَ،\nوَأَنْتَ الآخِرُ فَلَا شَيْءَ بَعْدَكَ،\nبِسْمِكَ أَحْيَا وَبِسْمِكَ أَمُوتُ.',trans:'اللهم أنت الأول فلا شيء قبلك، وأنت الآخر فلا شيء بعدك، باسمك أحيا وباسمك أموت.',source:'دعاء النوم'},
+  {title:'دعاء قضاء الحاجة',time:'في الحاجات',arabic:'يَا اللهُ يَا رَحْمَانُ يَا رَحِيمُ،\nيَا مُقَلِّبَ الْقُلُوبِ ثَبِّتْ قَلْبِي عَلَى دِينِكَ،\nوَاقْضِ حَاجَتِي.',trans:'يا الله يا رحمان يا رحيم، يا مقلب القلوب ثبّت قلبي على دينك، واقضِ حاجتي.',source:'أدعية قضاء الحوائج'},
+];
+
+// ══ TASBIH STATE ══
+const TASBIH_DATA=[
+  {name:'التكبير',arabic:'اللهُ أَكْبَر',target:34},
+  {name:'التحميد',arabic:'الحَمْدُ لِلَّهِ',target:33},
+  {name:'التسبيح',arabic:'سُبْحَانَ اللهِ',target:33},
+];
+let tasbihIdx=0, tasbihCounts=[0,0,0];
+let istghCount=0;
+
+// ══ BUILD LISTS ══
+function buildDuas(data,containerId){
+  const el=document.getElementById(containerId);
+  el.innerHTML=data.map((d,i)=>`
+    <div class="dua-card" style="animation-delay:${i*.06}s" onclick="toggleDua(this)">
+      <div class="dua-header">
+        <div class="dua-num">${toArabicNum(i+1)}</div>
+        <div class="dua-hd-info">
+          <div class="dua-hd-title">${d.day||d.title}</div>
+          <div class="dua-hd-time">${d.time||'دعاء اليوم'}</div>
+        </div>
+        <span class="dua-arrow">›</span>
+      </div>
+      <div class="dua-body">
+        <div class="dua-arabic">${d.arabic.replace(/\n/g,'<br>')}</div>
+        <div class="dua-trans">${d.trans||''}</div>
+        <div class="dua-source">📚 ${d.source||''}</div>
+      </div>
+    </div>`).join('');
+}
+function toArabicNum(n){return String(n).replace(/\d/g,d=>'٠١٢٣٤٥٦٧٨٩'[d]);}
+function toggleDua(el){
+  const was=el.classList.contains('open');
+  el.closest('.dua-list').querySelectorAll('.dua-card').forEach(c=>c.classList.remove('open'));
+  if(!was)el.classList.add('open');
+}
+
+// ══ SCREENS ══
+function openSection(s){
+  ['Home','Daily','Taaqib','Diverse','Tasbih','Istighfar'].forEach(x=>{
+    const e=document.getElementById('sc'+x.charAt(0).toUpperCase()+x.slice(1));
+    if(e)e.classList.remove('active');
+  });
+  // map
+  const map={daily:'scDaily',taaqib:'scTaaqib',diverse:'scDiverse',tasbih:'scTasbih',istighfar:'scIstighfar'};
+  if(map[s])document.getElementById(map[s]).classList.add('active');
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  if(s==='tasbih')document.getElementById('tabTasbih').classList.add('active');
+  if(s==='istighfar')document.getElementById('tabIstighfar').classList.add('active');
+}
+function goHome(){
+  ['scDaily','scTaaqib','scDiverse','scTasbih','scIstighfar'].forEach(id=>{
+    const e=document.getElementById(id);if(e)e.classList.remove('active');
+  });
+  document.getElementById('scHome').classList.add('active');
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('tabHome').classList.add('active');
+}
+function switchTab(n){
+  if(n==='Home')goHome();
+}
+
+// ══ TASBIH ══
+function setTasbih(i){
+  tasbihIdx=i;
+  document.querySelectorAll('.ttab').forEach((t,j)=>t.classList.toggle('active',j===i));
+  updateTasbihUI();
+}
+function updateTasbihUI(){
+  const d=TASBIH_DATA[tasbihIdx];
+  const c=tasbihCounts[tasbihIdx];
+  document.getElementById('tasbihName').textContent=d.name;
+  document.getElementById('tasbihArabic').textContent=d.arabic;
+  document.getElementById('tasbihCount').textContent=c;
+  document.getElementById('tasbihTarget').textContent='من '+toArabicNum(d.target);
+  document.getElementById('tasbihFill').style.width=Math.min(100,c/d.target*100)+'%';
+}
+function countTasbih(){
+  const d=TASBIH_DATA[tasbihIdx];
+  if(tasbihCounts[tasbihIdx]<d.target){
+    tasbihCounts[tasbihIdx]++;
+    updateTasbihUI();
+    if(tasbihCounts[tasbihIdx]===d.target){
+      setTimeout(()=>{
+        if(tasbihIdx<2){setTasbih(tasbihIdx+1);}
+        else{alert('أحسنت! اكتمل تسبيح الزهراء ع 🌹');}
+      },300);
+    }
+  }
+}
+function resetTasbih(){tasbihCounts=[0,0,0];setTasbih(0);}
+
+// ══ ISTIGHFAR ══
+function countIstghfar(){
+  istghCount++;
+  document.getElementById('istghCount').textContent=istghCount;
+}
+function resetIstghfar(){
+  istghCount=0;
+  document.getElementById('istghCount').textContent=0;
+}
+
+// ══ DATE ══
+function setDate(){
+  const now=new Date();
+  const days=['الأحد','الاثنين','الثلاثاء','الأربعاء','الخميس','الجمعة','السبت'];
+  const months=['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
+  document.getElementById('heroDate').textContent=`${days[now.getDay()]} · ${now.getDate()} ${months[now.getMonth()]} ${now.getFullYear()}`;
+}
+
+// ══ PRAYER TIMES (Karbala) ══
+async function loadPrayerTimes(){
+  const el=document.getElementById('ptContent');
+  try{
+    const res=await fetch('https://api.aladhan.com/v1/timingsByCity?city=Karbala&country=Iraq&method=6&school=1');
+    const data=await res.json();
+    if(data.code===200){
+      const t=data.data.timings;
+      const prayers=[
+        {name:'الفجر',key:'Fajr',icon:'🌄'},
+        {name:'الشروق',key:'Sunrise',icon:'☀️'},
+        {name:'الظهر',key:'Dhuhr',icon:'🌞'},
+        {name:'العصر',key:'Asr',icon:'🌇'},
+        {name:'المغرب',key:'Maghrib',icon:'🌆'},
+        {name:'العشاء',key:'Isha',icon:'🌙'},
+      ];
+      const now=new Date();
+      const nowMin=now.getHours()*60+now.getMinutes();
+      let nextIdx=-1;
+      prayers.forEach((p,i)=>{
+        const[h,m]=t[p.key].split(':').map(Number);
+        const pMin=h*60+m;
+        if(pMin>nowMin&&nextIdx===-1)nextIdx=i;
+      });
+      el.innerHTML=`<div class="pt-grid">${prayers.map((p,i)=>{
+        const time=t[p.key];
+        const isNext=i===nextIdx;
+        return`<div class="pt-item${isNext?' next':''}">
+          <div class="pt-name">${p.icon} ${p.name}</div>
+          <div class="pt-time">${time}</div>
+          ${isNext?'<div class="pt-next-badge">التالية</div>':''}
+        </div>`;
+      }).join('')}</div>`;
+    }else throw new Error();
+  }catch(e){
+    el.innerHTML=`<div class="pt-loading" style="color:var(--gold)">⚠️ تعذّر تحميل الأوقات<br><small style="color:var(--muted)">تأكد من الاتصال بالإنترنت</small></div>`;
+  }
+}
+
+// ══ INIT ══
+buildDuas(DAILY_DUAS,'dailyList');
+buildDuas(TAAQIB,'taaqibList');
+buildDuas(DIVERSE,'diverseList');
+updateTasbihUI();
+setDate();
+loadPrayerTimes();
+</script>
+</body>
+</html>
