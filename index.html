@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<title>ملخص علوم ١ 🔬</title>
+<style>body,*{font-family:Tajawal,"Segoe UI",Arial,Tahoma,sans-serif}</style>
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet" onerror="void(0)">
+<style>
+:root{
+  --sky:#e0f4ff;--ocean:#0077b6;--ocean2:#023e8a;
+  --sun:#ffb703;--sun2:#fb8500;--green:#2dc653;
+  --purple:#7b2d8b;--pink:#e91e8c;--coral:#ff6b6b;
+  --card:#fff;--text:#1a1a2e;--muted:#6c7a9c;
+  --r:20px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;overflow:hidden;}
+body{font-family:'Tajawal',sans-serif;background:var(--sky);color:var(--text);direction:rtl;display:flex;flex-direction:column;height:100vh;}
+
+/* ══ CLOUDS BG ══ */
+body::before{
+  content:'';position:fixed;inset:0;
+  background:
+    radial-gradient(ellipse 80% 30% at 50% 0%,#c8e6ff 0%,transparent 60%),
+    radial-gradient(ellipse 40% 20% at 10% 15%,rgba(255,255,255,.8),transparent 50%),
+    radial-gradient(ellipse 35% 20% at 85% 10%,rgba(255,255,255,.7),transparent 50%);
+  pointer-events:none;z-index:0;
+}
+
+/* SCREENS */
+.screen{display:none;flex:1;overflow-y:auto;overflow-x:hidden;padding-bottom:120px;position:relative;z-index:1;}
+.screen.active{display:block;}
+.screen::-webkit-scrollbar{width:4px;}
+.screen::-webkit-scrollbar-thumb{background:#b0d0ef;border-radius:4px;}
+
+/* TAB BAR */
+.tabbar{
+  display:flex;background:#fff;
+  border-top:3px solid #b0d4f1;
+  position:fixed;bottom:0;left:0;right:0;
+  z-index:9999;
+  box-shadow:0 -3px 16px rgba(0,119,182,.12);
+}
+.tab{flex:1;display:flex;flex-direction:column;align-items:center;padding:9px 0 7px;cursor:pointer;color:var(--muted);font-size:10px;font-weight:900;gap:2px;border-top:3px solid transparent;transition:all .2s;}
+.tab.active{color:var(--ocean);border-top-color:var(--ocean);}
+.tab-icon{font-size:22px;}
+
+/* ══ HOME ══ */
+.home-hero{
+  background:linear-gradient(160deg,var(--ocean2) 0%,var(--ocean) 70%,#00b4d8 100%);
+  padding:24px 18px 20px;text-align:center;
+  position:relative;overflow:hidden;
+}
+.home-hero::before{
+  content:'🌊';position:absolute;left:-20px;bottom:-10px;
+  font-size:140px;opacity:.12;
+}
+.home-hero::after{
+  content:'🐋';position:absolute;right:-10px;bottom:0;
+  font-size:80px;opacity:.2;
+}
+.hero-fish{font-size:48px;animation:swim 3s ease-in-out infinite;display:inline-block;margin-bottom:8px;}
+@keyframes swim{0%,100%{transform:translateY(0) rotate(-3deg);}50%{transform:translateY(-8px) rotate(3deg);}}
+.hero-title{font-size:26px;font-weight:900;color:#fff;margin-bottom:4px;text-shadow:0 2px 8px rgba(0,0,0,.2);}
+.hero-grade{font-size:14px;color:rgba(255,255,255,.8);background:rgba(255,255,255,.15);display:inline-block;padding:4px 16px;border-radius:99px;margin-top:6px;}
+.hero-teacher{font-size:15px;font-weight:900;color:#fff;background:rgba(255,255,255,.2);display:inline-block;padding:6px 18px;border-radius:99px;margin-top:8px;border:2px solid rgba(255,255,255,.4);letter-spacing:.5px;}
+
+/* PROGRESS CARD */
+.prog-card{
+  margin:14px 16px 0;
+  background:#fff;border-radius:var(--r);
+  padding:14px;box-shadow:0 4px 16px rgba(0,119,182,.1);
+  border:2px solid #bee3f8;
+}
+.pc-title{font-size:13px;font-weight:900;color:var(--ocean);margin-bottom:8px;display:flex;align-items:center;gap:6px;}
+.pc-bar-wrap{background:#e8f4fd;border-radius:99px;height:12px;overflow:hidden;margin-bottom:6px;}
+.pc-bar{height:12px;border-radius:99px;background:linear-gradient(90deg,var(--sun),var(--coral),var(--pink));transition:width .6s;}
+.pc-row{display:flex;justify-content:space-between;font-size:12px;font-weight:700;color:var(--muted);}
+.pc-row span{color:var(--ocean);}
+
+/* CHAPTER CARDS */
+.chapters{padding:0 16px 4px;}
+.ch-title{font-size:13px;font-weight:900;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin:14px 0 10px;display:flex;align-items:center;gap:6px;}
+.chap-card{
+  border-radius:var(--r);padding:16px;margin-bottom:12px;
+  cursor:pointer;transition:transform .2s,box-shadow .2s;
+  position:relative;overflow:hidden;
+  animation:bounceIn .4s ease both;
+  box-shadow:0 4px 20px rgba(0,0,0,.1);
+}
+@keyframes bounceIn{from{opacity:0;transform:translateY(15px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+.chap-card:hover{transform:translateY(-3px);box-shadow:0 8px 28px rgba(0,0,0,.15);}
+.chap-card:active{transform:scale(.97);}
+.cc-emoji{font-size:52px;float:left;margin-right:12px;filter:drop-shadow(0 2px 8px rgba(0,0,0,.15));}
+.cc-info{overflow:hidden;}
+.cc-name{font-size:16px;font-weight:900;color:#fff;text-shadow:0 1px 4px rgba(0,0,0,.2);}
+.cc-lessons{font-size:12px;color:rgba(255,255,255,.8);margin-top:4px;}
+.cc-prog{background:rgba(255,255,255,.25);border-radius:99px;height:6px;overflow:hidden;margin-top:8px;}
+.cc-prog-fill{height:6px;background:rgba(255,255,255,.9);border-radius:99px;transition:width .5s;}
+.cc-badge{
+  position:absolute;top:10px;left:10px;
+  background:rgba(255,255,255,.25);border-radius:99px;
+  padding:3px 10px;font-size:10px;font-weight:900;color:#fff;
+}
+
+/* ══ LESSON LIST ══ */
+.lesson-hdr{
+  padding:16px 16px 12px;
+  position:sticky;top:0;z-index:50;
+  border-bottom:2px solid #e8f4fd;
+  background:var(--sky);
+}
+.lh-back{background:none;border:none;color:var(--ocean);font-family:'Tajawal',sans-serif;font-size:13px;font-weight:900;cursor:pointer;display:flex;align-items:center;gap:5px;margin-bottom:8px;}
+.lh-chap{font-size:18px;font-weight:900;}
+.lh-prog-row{display:flex;align-items:center;gap:8px;margin-top:6px;}
+.lh-bar{flex:1;background:#bee3f8;border-radius:99px;height:8px;overflow:hidden;}
+.lh-fill{height:8px;border-radius:99px;transition:width .5s;}
+.lh-pct{font-size:12px;font-weight:900;}
+
+.lessons-list{padding:12px 16px;}
+.lesson-row{
+  background:#fff;border-radius:14px;padding:13px 14px;
+  margin-bottom:8px;display:flex;align-items:center;gap:12px;
+  cursor:pointer;transition:all .2s;
+  box-shadow:0 2px 10px rgba(0,119,182,.07);
+  border:2px solid transparent;
+  animation:bounceIn .25s ease both;
+}
+.lesson-row:hover{border-color:#bee3f8;transform:translateX(-3px);}
+.lesson-row.done{border-color:#b7f5c8;background:#f0fdf4;}
+.lr-num{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;flex-shrink:0;border:2px solid #bee3f8;color:var(--muted);transition:all .2s;}
+.lesson-row.done .lr-num{background:var(--green);border-color:var(--green);color:#fff;}
+.lr-info{flex:1;}
+.lr-title{font-size:14px;font-weight:900;}
+.lr-meta{font-size:11px;color:var(--muted);margin-top:2px;}
+.lr-arr{font-size:18px;color:#bee3f8;}
+
+/* ══ LESSON VIEWER ══ */
+.lviewer{display:none;position:fixed;inset:0;z-index:300;background:var(--sky);overflow-y:auto;flex-direction:column;}
+.lviewer.open{display:flex;}
+.lv-top{
+  display:flex;align-items:center;gap:8px;
+  padding:12px 14px;background:#fff;
+  border-bottom:2px solid #bee3f8;
+  position:sticky;top:0;z-index:10;flex-shrink:0;
+  box-shadow:0 2px 10px rgba(0,119,182,.08);
+}
+.lv-back{background:var(--sky);border:2px solid #bee3f8;color:var(--ocean);border-radius:10px;padding:7px 14px;font-family:'Tajawal',sans-serif;font-size:13px;font-weight:900;cursor:pointer;}
+.lv-title{font-size:14px;font-weight:900;flex:1;text-align:center;color:var(--text);}
+.lv-done-btn{background:var(--green);color:#fff;border:none;border-radius:10px;padding:8px 14px;font-family:'Tajawal',sans-serif;font-size:13px;font-weight:900;cursor:pointer;}
+.lv-progbar{height:5px;background:#bee3f8;flex-shrink:0;}
+.lv-progfill{height:5px;transition:width .3s;}
+
+.lv-body{padding:16px 16px 140px;flex:1;}
+
+/* Lesson title banner */
+.lesson-banner{
+  border-radius:var(--r);padding:20px;text-align:center;
+  margin-bottom:16px;position:relative;overflow:hidden;
+}
+.lb-emoji{font-size:60px;display:block;margin-bottom:8px;animation:wiggle 2s ease-in-out infinite;}
+@keyframes wiggle{0%,100%{transform:rotate(-5deg);}50%{transform:rotate(5deg);}}
+.lb-title{font-size:22px;font-weight:900;color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.2);}
+.lb-subtitle{font-size:13px;color:rgba(255,255,255,.8);margin-top:4px;}
+
+/* Content blocks */
+.blk{background:#fff;border-radius:14px;padding:14px;margin-bottom:12px;box-shadow:0 2px 10px rgba(0,119,182,.07);}
+.blk-title{font-size:13px;font-weight:900;color:var(--ocean);margin-bottom:8px;display:flex;align-items:center;gap:6px;border-bottom:2px dashed #bee3f8;padding-bottom:6px;}
+.blk-text{font-size:14px;line-height:2;color:#334155;}
+.blk-list{list-style:none;}
+.blk-list li{font-size:13px;line-height:1.9;color:#334155;padding-right:28px;position:relative;margin-bottom:4px;}
+.blk-list li::before{content:'⭐';position:absolute;right:0;font-size:14px;top:2px;}
+.blk-list.nums li::before{content:none;}
+.blk-list.nums{counter-reset:n;}
+.blk-list.nums li{padding-right:32px;counter-increment:n;}
+.blk-list.nums li::after{content:counter(n);position:absolute;right:0;top:2px;width:22px;height:22px;background:var(--ocean);color:#fff;border-radius:50%;font-size:11px;font-weight:900;display:flex;align-items:center;justify-content:center;line-height:1;}
+
+/* Illustrated info box */
+.info-ill{
+  border-radius:14px;padding:14px;margin-bottom:12px;
+  display:flex;gap:12px;align-items:flex-start;
+  border:2px dashed;
+}
+.ii-icon{font-size:32px;flex-shrink:0;animation:pulse 2s ease-in-out infinite;}
+@keyframes pulse{0%,100%{transform:scale(1);}50%{transform:scale(1.1);}}
+.ii-content{}
+.ii-title{font-size:13px;font-weight:900;margin-bottom:5px;}
+.ii-text{font-size:13px;line-height:1.8;color:#334155;}
+
+/* SVG illustrations */
+.svg-wrap{text-align:center;margin:10px 0;}
+.svg-wrap svg{max-width:100%;border-radius:14px;}
+
+/* QA block */
+.qa-block{background:linear-gradient(135deg,#f0f9ff,#e0f2fe);border:2px solid #7dd3fc;border-radius:14px;padding:14px;margin-bottom:10px;}
+.qa-q{font-size:14px;font-weight:900;color:var(--ocean2);margin-bottom:6px;display:flex;gap:8px;}
+.qa-q-badge{background:var(--ocean);color:#fff;border-radius:6px;padding:2px 8px;font-size:11px;font-weight:900;flex-shrink:0;}
+.qa-a{font-size:13px;line-height:1.9;color:#334155;padding-right:12px;border-right:3px solid #7dd3fc;}
+
+/* Highlight box */
+.highlight{background:linear-gradient(135deg,#fff9c4,#fef08a);border:2px solid #fbbf24;border-radius:12px;padding:12px 14px;margin-bottom:10px;display:flex;gap:8px;align-items:flex-start;}
+.hl-icon{font-size:20px;flex-shrink:0;}
+.hl-text{font-size:13px;font-weight:700;color:#78350f;line-height:1.8;}
+
+/* Nav buttons */
+.nav-btns{display:flex;gap:8px;margin-top:16px;}
+.nav-prev{flex:1;background:#fff;border:2px solid #bee3f8;color:var(--muted);border-radius:12px;padding:12px;font-family:'Tajawal',sans-serif;font-size:14px;font-weight:700;cursor:pointer;}
+.nav-next{flex:2;background:linear-gradient(135deg,var(--ocean),var(--ocean2));color:#fff;border:none;border-radius:12px;padding:13px;font-family:'Tajawal',sans-serif;font-size:15px;font-weight:900;cursor:pointer;box-shadow:0 4px 14px rgba(0,119,182,.3);}
+
+/* ══ QUIZ ══ */
+.quiz-hero{background:linear-gradient(135deg,#7b2d8b,#e91e8c);padding:20px 18px;text-align:center;position:relative;overflow:hidden;}
+.quiz-hero::before{content:'🧠';position:absolute;left:-10px;bottom:-5px;font-size:100px;opacity:.1;}
+.qh-emoji{font-size:44px;animation:bounce 1s ease-in-out infinite;display:inline-block;}
+@keyframes bounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
+.qh-title{font-size:20px;font-weight:900;color:#fff;margin-top:4px;}
+.qh-sub{font-size:12px;color:rgba(255,255,255,.75);margin-top:4px;}
+
+.q-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:12px 16px 0;}
+.qs{background:#fff;border-radius:12px;padding:10px;text-align:center;box-shadow:0 2px 8px rgba(0,0,0,.06);}
+.qs-num{font-size:22px;font-weight:900;}
+.qs-lbl{font-size:10px;color:var(--muted);}
+
+.q-card{background:#fff;border-radius:var(--r);margin:12px 16px 0;padding:16px;box-shadow:0 4px 18px rgba(0,0,0,.08);}
+.qc-num{font-size:11px;font-weight:900;color:var(--purple);margin-bottom:6px;}
+.qc-q{font-size:15px;font-weight:700;line-height:1.7;margin-bottom:12px;}
+.qc-opts{display:flex;flex-direction:column;gap:8px;}
+.qc-opt{background:#f8faff;border:2px solid #bee3f8;border-radius:12px;padding:12px 14px;font-family:'Tajawal',sans-serif;font-size:13px;font-weight:700;cursor:pointer;text-align:right;transition:all .2s;color:var(--text);}
+.qc-opt:hover{border-color:var(--ocean);background:#e0f2fe;}
+.qc-opt.correct{background:#f0fdf4;border-color:var(--green);color:#166534;}
+.qc-opt.wrong{background:#fef2f2;border-color:#f87171;color:#991b1b;}
+.qc-opt.dis{cursor:default;pointer-events:none;}
+.qc-result{display:none;margin-top:10px;padding:10px 12px;border-radius:10px;font-size:13px;font-weight:700;line-height:1.7;}
+.qc-result.ok{background:#f0fdf4;color:#166534;border:2px solid #86efac;}
+.qc-result.no{background:#fef2f2;color:#991b1b;border:2px solid #fca5a5;}
+.next-q{display:block;width:calc(100%-32px);margin:10px 16px 0;background:linear-gradient(135deg,var(--purple),var(--pink));color:#fff;border:none;border-radius:12px;padding:14px;font-family:'Tajawal',sans-serif;font-size:15px;font-weight:900;cursor:pointer;box-shadow:0 4px 14px rgba(123,45,139,.3);}
+.stars-row{display:flex;justify-content:center;gap:4px;font-size:20px;margin-top:6px;}
+
+/* DONE POPUP */
+.done-pop{position:fixed;inset:0;z-index:999;background:rgba(0,0,0,.6);display:none;align-items:center;justify-content:center;}
+.done-pop.show{display:flex;}
+.done-box{background:#fff;border-radius:24px;padding:28px 22px;text-align:center;max-width:290px;width:90%;animation:popIn .3s cubic-bezier(.34,1.56,.64,1);}
+@keyframes popIn{from{opacity:0;transform:scale(.7)}to{opacity:1;transform:scale(1)}}
+.dp-emoji{font-size:64px;display:block;margin-bottom:8px;}
+.dp-title{font-size:22px;font-weight:900;color:var(--ocean);margin-bottom:6px;}
+.dp-sub{font-size:13px;color:var(--muted);margin-bottom:16px;line-height:1.7;}
+.dp-btn{width:100%;background:linear-gradient(135deg,var(--ocean),var(--ocean2));color:#fff;border:none;border-radius:14px;padding:14px;font-family:'Tajawal',sans-serif;font-size:16px;font-weight:900;cursor:pointer;}
+.dp-btn2{width:100%;background:none;border:2px solid #bee3f8;color:var(--muted);border-radius:14px;padding:12px;font-family:'Tajawal',sans-serif;font-size:14px;font-weight:700;cursor:pointer;margin-top:8px;}
+</style>
+</head>
+<body>
+
+<!-- HOME -->
+<div class="screen active" id="scHome">
+  <div class="home-hero">
+    <span class="hero-fish">🐠</span>
+    <div class="hero-title">ملخص علوم ١</div>
+    <div class="hero-grade">📅 عام 2026 🔬</div>
+    <div class="hero-teacher">👩‍🏫 معلمة المادة: فاطمة بشار</div>
+  </div>
+
+  <div class="prog-card">
+    <div class="pc-title">⭐ تقدمي في المادة</div>
+    <div class="pc-bar-wrap"><div class="pc-bar" id="progBar" style="width:0%"></div></div>
+    <div class="pc-row">درست <span id="doneCount">0</span> من <span id="totalCount">0</span> موضوع <span id="progPct" style="color:var(--coral)">0%</span></div>
+  </div>
+
+  <div class="chapters">
+    <div class="ch-title">📚 الوحدات الدراسية</div>
+    <div id="chapsList"></div>
+  </div>
+</div>
+
+<!-- LESSONS LIST -->
+<div class="screen" id="scLessons">
+  <div class="lesson-hdr">
+    <button class="lh-back" onclick="closeChap()">← رجوع</button>
+    <div class="lh-chap" id="chapTitle"></div>
+    <div class="lh-prog-row">
+      <div class="lh-bar"><div class="lh-fill" id="chapProgFill" style="width:0%"></div></div>
+      <span class="lh-pct" id="chapProgPct">0%</span>
+    </div>
+  </div>
+  <div class="lessons-list" id="lessonsList"></div>
+</div>
+
+<!-- QUIZ -->
+<div class="screen" id="scQuiz">
+  <div class="quiz-hero">
+    <span class="qh-emoji">🧠</span>
+    <div class="qh-title">أسئلة مراجعة</div>
+    <div class="qh-sub">اختبر معلوماتك وكسب نجوم ⭐</div>
+  </div>
+  <div class="q-stats">
+    <div class="qs"><div class="qs-num" style="color:var(--ocean)" id="qCurr">1</div><div class="qs-lbl">السؤال</div></div>
+    <div class="qs"><div class="qs-num" style="color:var(--green)" id="qScore">0</div><div class="qs-lbl">✅ صح</div></div>
+    <div class="qs"><div class="qs-num" style="color:var(--coral)" id="qWrong">0</div><div class="qs-lbl">❌ غلط</div></div>
+  </div>
+  <div id="quizContent"></div>
+  <button class="next-q" id="nextQBtn" onclick="nextQ()" style="display:none">السؤال التالي ←</button>
+</div>
+
+<!-- LESSON VIEWER -->
+<div class="lviewer" id="lviewer">
+  <div class="lv-top">
+    <button class="lv-back" onclick="closeLesson()">← رجوع</button>
+    <div class="lv-title" id="lvTitle"></div>
+    <button class="lv-done-btn" id="lvDoneBtn" onclick="markDone()">✅ فهمت!</button>
+  </div>
+  <div class="lv-progbar"><div class="lv-progfill" id="lvProgFill" style="width:0%"></div></div>
+  <div class="lv-body" id="lvBody"></div>
+</div>
+
+<!-- DONE POPUP -->
+<div class="done-pop" id="donePop">
+  <div class="done-box">
+    <span class="dp-emoji" id="dpEmoji">🎉</span>
+    <div class="dp-title" id="dpTitle">رائع!</div>
+    <div class="dp-sub" id="dpSub"></div>
+    <div class="stars-row" id="dpStars">⭐⭐⭐</div>
+    <button class="dp-btn" id="dpBtn" onclick="closeDone()">الدرس التالي ←</button>
+    <button class="dp-btn2" onclick="closeDone()">ارجع للقائمة</button>
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="tabbar">
+  <div class="tab active" id="tabHome" onclick="switchTab('Home')"><span class="tab-icon" style="font-size:20px">⌂</span><span>الرئيسية</span></div>
+  <div class="tab" id="tabQuiz" onclick="switchTab('Quiz')"><span class="tab-icon" style="font-size:20px">✎</span><span>مراجعة</span></div>
+</div>
+
+<script>
+// ══════════════════════════════════════
+//  CURRICULUM DATA
+// ══════════════════════════════════════
+const CURRICULUM = [
+{
+  id:'c1', name:'سطح الأرض والمسطحات المائية', emoji:'🌍',
+  bg:'linear-gradient(135deg,#0077b6,#00b4d8)', accent:'#0077b6',
+  lessons:[
+    {id:'l1', emoji:'🌊', title:'تركيب سطح الأرض',
+     banner:{bg:'linear-gradient(135deg,#023e8a,#0077b6)', subtitle:'اليابسة والماء'},
+     content:[
+      {type:'text', title:'🌍 كيف يبدو كوكبنا؟',
+       text:'يتكون سطح الأرض من اليابسة والماء. يشكل الماء نسبة 71% ، أما المساحة الباقية فهي القارات واليابسة!'},
+      {type:'svg_earth'},
+      {type:'highlight', icon:'💡', text:'الماء يغطي أكثر من ثلثي سطح الأرض! ولهذا يبدو كوكبنا أزرق اللون من الفضاء 🚀'},
+     ]
+    },
+    {id:'l2', emoji:'🌊', title:'أنواع البحار الثلاثة',
+     banner:{bg:'linear-gradient(135deg,#0077b6,#48cae4)', subtitle:'البحار المختلفة'},
+     content:[
+      {type:'text', title:'🌊 ما هي البحار؟',
+       text:'البحار هي تجمعات مائية كبيرة تمثل الجزء الذي يحيط باليابسة. وتنقسم إلى ثلاثة أنواع:'},
+      {type:'svg_seas'},
+      {type:'list_num', title:'📋 أنواع البحار الثلاثة', items:[
+        '🌊 البحار الخارجية: هي البحار المتصلة بالمحيط مباشرة',
+        '🔗 البحار الداخلية: تتصل بالمحيط عبر قنوات',
+        '🏔️ البحار المغلقة: محاطة باليابسة من كل جانب ولا تتصل بالمحيط',
+      ]},
+     ]
+    },
+    {id:'l3', emoji:'🗺️', title:'المحيطات الكبيرة',
+     banner:{bg:'linear-gradient(135deg,#0096c7,#48cae4)', subtitle:'المياه الشاسعة'},
+     content:[
+      {type:'ill', icon:'🗺️', color:'#e0f4ff', borderColor:'#7dd3fc', textColor:'#0077b6',
+       title:'ما هي المحيطات؟',
+       text:'المحيطات مساحات مائية شاسعة تمتد مياهها من المناطق الجليدية في القطبين إلى المياه الدافئة في المنطقة الاستوائية.'},
+      {type:'list_star', title:'🌊 المحيطات الرئيسية', items:[
+        '🌊 المحيط الهادي — الأكبر في العالم',
+        '🌊 المحيط الهندي',
+        '🌊 المحيط الأطلسي',
+      ]},
+      {type:'qa', q:'ما حواف القارات؟', a:'هي الجزء من القارات المتصل بالبحار والمحيطات بشكل مباشر.'},
+      {type:'qa', q:'ما أنواع تضاريس قاع البحار والمحيطات؟', a:'سلاسل جبال — سهول بحرية — فوهات براكين بحرية — خنادق ووديان'},
+     ]
+    },
+    {id:'l4', emoji:'📡', title:'قياس أعماق البحار',
+     banner:{bg:'linear-gradient(135deg,#023e8a,#0096c7)', subtitle:'تقنيات القياس'},
+     content:[
+      {type:'list_num', title:'📡 كيف نقيس الأعماق؟', items:[
+        '📡 تقنيات السونار الحديثة',
+        '📷 آلات التصوير',
+        '🛰️ الأقمار الصناعية',
+        '🔊 صدى الصوت',
+      ]},
+      {type:'qa', q:'كيف يفيدنا الصوت في قياس الأعماق؟',
+       a:'من خلال إرسال الصوت إلى قاع البحر واستقبال صداه منه، ومن خلال معرفة زمن الذهاب والإياب يمكن معرفة عمق البحار.'},
+      {type:'svg_sonar'},
+     ]
+    },
+    {id:'l5', emoji:'🐟', title:'أهمية البحار والمحيطات',
+     banner:{bg:'linear-gradient(135deg,#0077b6,#00b4d8)', subtitle:'لماذا المحيطات مهمة؟'},
+     content:[
+      {type:'list_star', title:'✨ فوائد البحار والمحيطات', items:[
+        '🏊 للسباحة والإبحار والترفيه',
+        '🐟 مصدر مهم للغذاء كالأسماك والمأكولات البحرية',
+        '⛽ مصدر مهم للطاقة كالنفط والغاز الطبيعي',
+        '🚢 تستخدم في المواصلات البحرية لنقل البضائع بين القارات',
+      ]},
+      {type:'qa', q:'لماذا لا يمكن وجود حياة بدون المحيطات؟',
+       a:'لأن المحيطات لها تأثير في الإبقاء على المناخ صحياً، وذلك بتنظيم درجة حرارة هواء الأرض وتوفير الرطوبة للأمطار.'},
+      {type:'ill', icon:'🧂', color:'#f0fdf4', borderColor:'#86efac', textColor:'#166534',
+       title:'مياه المحيط',
+       text:'مياه المحيط هي مزيج من الماء والمواد الصلبة الذائبة، يستخرج منها الإنسان الأملاح والمعادن مثل ملح الطعام واليود.'},
+     ]
+    },
+    {id:'l6', emoji:'💧', title:'دورة الماء والملوحة',
+     banner:{bg:'linear-gradient(135deg,#0096c7,#90e0ef)', subtitle:'رحلة الماء'},
+     content:[
+      {type:'ill', icon:'💧', color:'#e0f2fe', borderColor:'#7dd3fc', textColor:'#075985',
+       title:'دورة الماء',
+       text:'هي انتقال الماء من البحار والمحيطات إلى الغلاف الجوي ثم عودته إلى سطح الأرض ومنها إلى البحار والمحيطات من جديد.'},
+      {type:'svg_water_cycle'},
+      {type:'qa', q:'ما تأثير حرارة الشمس على دورة الماء؟', a:'حرارة الشمس هي العامل الرئيسي في تبخر مياه البحار والمحيطات.'},
+      {type:'qa', q:'ما منشأ ملوحة مياه البحار والمحيطات؟', a:'تعمل المياه الجارية فوق صخور القشرة الأرضية على إذابة بعض أملاح هذه الصخور ونقلها للبحار والمحيطات.'},
+      {type:'highlight', icon:'🧂', text:'الملوحة = كمية الأملاح الذائبة في كيلو غرام واحد من ماء البحر. مصدرها: صخور القشرة الأرضية.'},
+     ]
+    },
+  ]
+},
+{
+  id:'c2', name:'الطاقة ومصادرها', emoji:'⚡',
+  bg:'linear-gradient(135deg,#f59e0b,#ef4444)', accent:'#f59e0b',
+  lessons:[
+    {id:'l7', emoji:'⚡', title:'مصادر الطاقة',
+     banner:{bg:'linear-gradient(135deg,#78350f,#f59e0b)', subtitle:'الطاقة المتجددة وغير المتجددة'},
+     content:[
+      {type:'text', title:'⚡ ما هي الطاقة؟', text:'تعد الشمس ☀️ المصدر الرئيسي للحرارة على سطح الأرض. ومصادر الطاقة في حياتنا نوعان:'},
+      {type:'svg_energy'},
+      {type:'ill', icon:'♻️', color:'#f0fdf4', borderColor:'#86efac', textColor:'#166534',
+       title:'الطاقة المتجددة',
+       text:'هي طاقة دائمة لا تنفذ وغير ملوثة للبيئة. مصادرها: الشمس 🌞 — الرياح 🌬️ — الماء 💧'},
+      {type:'ill', icon:'🏭', color:'#fef2f2', borderColor:'#fca5a5', textColor:'#991b1b',
+       title:'الطاقة غير المتجددة',
+       text:'هي طاقة تنفذ نتيجة لاستخدام الإنسان لها وهي ملوثة للبيئة. مصادرها: الوقود الأحفوري ⛽'},
+     ]
+    },
+    {id:'l8', emoji:'☀️', title:'الطاقة الشمسية',
+     banner:{bg:'linear-gradient(135deg,#92400e,#f59e0b)', subtitle:'طاقة الشمس الدائمة'},
+     content:[
+      {type:'ill', icon:'☀️', color:'#fffbeb', borderColor:'#fcd34d', textColor:'#78350f',
+       title:'ما هي الطاقة الشمسية؟',
+       text:'هي نوع من أنواع الطاقة المتجددة التي لا تنفذ لأنها مستمدة من الشمس ☀️'},
+      {type:'svg_solar'},
+      {type:'list_star', title:'🌟 أهمية الطاقة الشمسية', items:[
+        '🌱 تستخدم في الزراعة من خلال البيوت الزجاجية',
+        '🚿 تسخين المياه والمنازل باستخدام السخان الشمسي',
+        '💡 توليد الطاقة الكهربائية باستخدام الخلايا الشمسية',
+      ]},
+      {type:'qa', q:'هل يمكن الاستفادة من الطاقة الشمسية فترة طويلة؟', a:'كلا! لأن مدى الاستفادة منها مرتبط بوجود أشعة الشمس طيلة وقت الاستخدام.'},
+     ]
+    },
+    {id:'l9', emoji:'🌬️', title:'طاقة الرياح',
+     banner:{bg:'linear-gradient(135deg,#1e40af,#3b82f6)', subtitle:'قوة الهواء المتجددة'},
+     content:[
+      {type:'ill', icon:'🌬️', color:'#e0f2fe', borderColor:'#7dd3fc', textColor:'#075985',
+       title:'طاقة الرياح',
+       text:'هي نوع من أنواع الطاقة المتجددة التي لا تنفذ لأنها مستمدة من حركة الرياح 🌬️'},
+      {type:'svg_wind'},
+      {type:'list_star', title:'🌟 أهمية طاقة الرياح', items:[
+        '⛵ تسيير المراكب الشراعية',
+        '⚙️ إدارة طواحين الهواء وطواحين طحن الحبوب',
+        '💡 توليد الطاقة الكهربائية',
+      ]},
+      {type:'highlight', icon:'⚠️', text:'تعتمد كمية الطاقة الكهربائية المنتجة من طاقة الرياح على (سرعة الرياح)'},
+      {type:'qa', q:'لماذا لا يمكن استثمار طاقة الرياح في مناطق السكن؟', a:'لأن الرياح تكون بطيئة وسرعتها غير منتظمة بسبب وجود المباني التي تعمل كمصدات للرياح.'},
+     ]
+    },
+    {id:'l10', emoji:'💧', title:'الطاقة المائية',
+     banner:{bg:'linear-gradient(135deg,#164e63,#0891b2)', subtitle:'قوة الماء الجارية'},
+     content:[
+      {type:'ill', icon:'💧', color:'#ecfdf5', borderColor:'#6ee7b7', textColor:'#065f46',
+       title:'الطاقة المائية',
+       text:'هي نوع من أنواع الطاقة المتجددة التي لا تنفذ وهي مستمدة من حركة الماء المستمر 💧'},
+      {type:'svg_hydro'},
+      {type:'qa', q:'ما أهمية الطاقة المائية؟', a:'تستثمر طاقة المياه الجارية في توليد الكهرباء، إذ تعمل على تدوير التوربينات الكبيرة التي تشغل المولدات الكهربائية.'},
+      {type:'qa', q:'لماذا تعد الطاقة المائية من الطاقات المتجددة؟', a:'لأنها لا تنفذ وغير ملوثة للبيئة.'},
+     ]
+    },
+    {id:'l11', emoji:'🌊', title:'طاقة المد والجزر',
+     banner:{bg:'linear-gradient(135deg,#0c4a6e,#0284c7)', subtitle:'حركة مياه الساحل'},
+     content:[
+      {type:'ill', icon:'🌊', color:'#f0f9ff', borderColor:'#bae6fd', textColor:'#0c4a6e',
+       title:'طاقة المد والجزر',
+       text:'هي نوع من الطاقة المتجددة التي لا تنفذ لأنها مستمدة من ظاهرة المد والجزر الطبيعية.'},
+      {type:'svg_tide'},
+      {type:'list_star', title:'🔑 مفاهيم مهمة', items:[
+        '📈 المد = ارتفاع مياه الساحل',
+        '📉 الجزر = انحسار مياه الساحل',
+        '💡 الاستخدام = توليد الطاقة الكهربائية',
+      ]},
+     ]
+    },
+    {id:'l12', emoji:'🌋', title:'طاقة الأرض الجوفية',
+     banner:{bg:'linear-gradient(135deg,#7f1d1d,#dc2626)', subtitle:'حرارة باطن الأرض'},
+     content:[
+      {type:'ill', icon:'🌋', color:'#fff7ed', borderColor:'#fdba74', textColor:'#7c2d12',
+       title:'طاقة الأرض الجوفية',
+       text:'هي نوع من الطاقة المتجددة التي لا يمكن أن تنفذ وهي مستمدة من حرارة باطن الأرض.'},
+      {type:'svg_geo'},
+      {type:'qa', q:'بماذا يمتاز باطن الأرض؟', a:'يمتاز بارتفاع درجة حرارته الشديد.'},
+      {type:'highlight', icon:'🔥', text:'باطن الأرض يصل إلى درجات حرارة هائلة جداً — تستخدم هذه الحرارة في توليد الطاقة الكهربائية النظيفة!'},
+     ]
+    },
+  ]
+},
+];
+
+// ══════════════════════════════════════
+//  SVG ILLUSTRATIONS
+// ══════════════════════════════════════
+const SVGS = {
+svg_earth:`<div class="svg-wrap">
+<svg viewBox="0 0 280 140" xmlns="http://www.w3.org/2000/svg" style="background:linear-gradient(180deg,#87ceeb,#e0f4ff);border-radius:14px;padding:10px">
+  <ellipse cx="140" cy="70" rx="55" ry="55" fill="#1a6faf"/>
+  <path d="M100,45 Q115,35 130,50 Q140,30 155,45 Q165,40 170,55 Q180,50 185,65 Q175,80 165,75 Q155,90 140,85 Q125,90 110,80 Q95,70 100,55 Z" fill="#2d9e4f" opacity="0.9"/>
+  <path d="M85,75 Q95,70 100,80 Q105,90 95,88 Z" fill="#2d9e4f"/>
+  <text x="140" y="128" text-anchor="middle" font-family="Tajawal" font-size="11" font-weight="bold" fill="#0077b6">71% ماء 🌊 + 29% يابسة 🏔️</text>
+</svg></div>`,
+
+svg_seas:`<div class="svg-wrap">
+<svg viewBox="0 0 280 150" xmlns="http://www.w3.org/2000/svg" style="background:#e0f4ff;border-radius:14px;padding:8px">
+  <!-- Sea 1 - External -->
+  <rect x="10" y="20" width="75" height="50" rx="10" fill="#0096c7"/>
+  <rect x="85" y="30" width="20" height="10" rx="4" fill="#48cae4"/>
+  <text x="47" y="50" text-anchor="middle" font-family="Tajawal" font-size="9" fill="white" font-weight="bold">بحر خارجي</text>
+  <text x="47" y="63" text-anchor="middle" font-family="Tajawal" font-size="8" fill="#caf0f8">متصل بالمحيط</text>
+  <!-- Sea 2 - Internal -->
+  <rect x="105" y="20" width="75" height="50" rx="10" fill="#0077b6"/>
+  <text x="142" y="42" text-anchor="middle" font-family="Tajawal" font-size="9" fill="white" font-weight="bold">بحر داخلي</text>
+  <text x="142" y="55" text-anchor="middle" font-family="Tajawal" font-size="8" fill="#caf0f8">عبر قنوات</text>
+  <path d="M155,70 L165,80 L155,90 L145,80 Z" fill="#48cae4" opacity="0.7"/>
+  <!-- Sea 3 - Closed -->
+  <rect x="180" y="15" width="85" height="60" rx="10" fill="#caf0f8"/>
+  <rect x="190" y="25" width="65" height="40" rx="8" fill="#0096c7"/>
+  <text x="222" y="48" text-anchor="middle" font-family="Tajawal" font-size="9" fill="white" font-weight="bold">بحر مغلق</text>
+  <text x="222" y="61" text-anchor="middle" font-family="Tajawal" font-size="8" fill="#caf0f8">محاط باليابسة</text>
+  <!-- Labels -->
+  <text x="47" y="88" text-anchor="middle" font-family="Tajawal" font-size="10" fill="#023e8a" font-weight="bold">١</text>
+  <text x="142" y="88" text-anchor="middle" font-family="Tajawal" font-size="10" fill="#023e8a" font-weight="bold">٢</text>
+  <text x="222" y="88" text-anchor="middle" font-family="Tajawal" font-size="10" fill="#023e8a" font-weight="bold">٣</text>
+  <text x="140" y="115" text-anchor="middle" font-family="Tajawal" font-size="11" fill="#023e8a" font-weight="bold">🌊 أنواع البحار الثلاثة</text>
+</svg></div>`,
+
+svg_sonar:`<div class="svg-wrap">
+<svg viewBox="0 0 280 160" xmlns="http://www.w3.org/2000/svg" style="background:linear-gradient(180deg,#87ceeb 0%,#0096c7 40%,#023e8a 100%);border-radius:14px">
+  <rect x="110" y="8" width="60" height="20" rx="6" fill="#ccc"/>
+  <rect x="125" y="28" width="30" height="8" rx="2" fill="#999"/>
+  <text x="140" y="22" text-anchor="middle" font-family="Tajawal" font-size="8" fill="#333">🚢 سفينة</text>
+  <!-- Sonar waves -->
+  <path d="M140,36 L140,110" stroke="#ffd700" stroke-width="2" stroke-dasharray="5,4"/>
+  <ellipse cx="140" cy="45" rx="15" ry="5" fill="none" stroke="#ffd700" stroke-width="1.5" opacity="0.7"/>
+  <ellipse cx="140" cy="60" rx="25" ry="8" fill="none" stroke="#ffd700" stroke-width="1" opacity="0.5"/>
+  <ellipse cx="140" cy="75" rx="35" ry="10" fill="none" stroke="#ffd700" stroke-width="1" opacity="0.3"/>
+  <!-- Ocean floor -->
+  <path d="M0,120 Q30,110 60,125 Q100,135 140,118 Q180,108 220,125 Q255,135 280,120 L280,160 L0,160 Z" fill="#023e8a"/>
+  <text x="140" y="148" text-anchor="middle" font-family="Tajawal" font-size="9" fill="#caf0f8">قاع البحر 🏔️</text>
+  <text x="170" y="75" font-family="Tajawal" font-size="9" fill="#ffd700" font-weight="bold">صدى الصوت</text>
+  <text x="140" y="155" text-anchor="middle" font-family="Tajawal" font-size="8" fill="white">📡 تقنية السونار لقياس الأعماق</text>
+</svg></div>`,
+
+svg_water_cycle:`<div class="svg-wrap">
+<svg viewBox="0 0 280 160" xmlns="http://www.w3.org/2000/svg" style="background:linear-gradient(180deg,#bde0fe,#e0f4ff);border-radius:14px">
+  <!-- Sun -->
+  <circle cx="240" cy="28" r="22" fill="#ffb703"/>
+  <text x="240" y="34" text-anchor="middle" font-size="14">☀️</text>
+  <!-- Clouds -->
+  <ellipse cx="80" cy="35" rx="35" ry="18" fill="white"/>
+  <ellipse cx="60" cy="38" rx="22" ry="14" fill="white"/>
+  <ellipse cx="105" cy="38" rx="22" ry="14" fill="white"/>
+  <text x="80" y="42" text-anchor="middle" font-size="12">☁️</text>
+  <!-- Rain -->
+  <text x="55" y="62" font-size="10">🌧️</text>
+  <text x="85" y="65" font-size="9">🌧️</text>
+  <!-- Mountain -->
+  <polygon points="155,130 195,70 235,130" fill="#4a5568"/>
+  <polygon points="185,130 210,90 235,130" fill="#6b7280"/>
+  <polygon points="190,74 195,62 200,74" fill="white"/>
+  <!-- Ocean -->
+  <path d="M0,130 Q40,120 80,130 Q120,140 160,130 L160,160 L0,160 Z" fill="#0077b6"/>
+  <text x="80" y="150" text-anchor="middle" font-family="Tajawal" font-size="9" fill="white" font-weight="bold">🌊 المحيط</text>
+  <!-- Arrows -->
+  <path d="M110,28 Q140,10 180,22" stroke="#f59e0b" stroke-width="2" fill="none" marker-end="url(#arr)"/>
+  <path d="M50,55 Q30,90 20,125" stroke="#0096c7" stroke-width="2" fill="none" stroke-dasharray="4,3"/>
+  <defs><marker id="arr" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8 Z" fill="#f59e0b"/></marker></defs>
+  <!-- Labels -->
+  <text x="125" y="18" font-family="Tajawal" font-size="8" fill="#b45309">تبخر ☀️</text>
+  <text x="8" y="95" font-family="Tajawal" font-size="8" fill="#0077b6">أمطار</text>
+  <text x="140" y="155" text-anchor="middle" font-family="Tajawal" font-size="10" fill="white" font-weight="bold">💧 دورة الماء</text>
+</svg></div>`,
+
+svg_energy:`<div class="svg-wrap">
+<svg viewBox="0 0 280 130" xmlns="http://www.w3.org/2000/svg" style="background:#fffbeb;border-radius:14px;padding:8px">
+  <!-- Renewable -->
+  <rect x="10" y="20" width="120" height="90" rx="14" fill="#f0fdf4" stroke="#86efac" stroke-width="2"/>
+  <text x="70" y="40" text-anchor="middle" font-family="Tajawal" font-size="10" fill="#166534" font-weight="bold">♻️ طاقة متجددة</text>
+  <text x="70" y="58" text-anchor="middle" font-size="16">☀️ 🌬️ 💧</text>
+  <text x="70" y="76" text-anchor="middle" font-family="Tajawal" font-size="9" fill="#166534">لا تنفذ — نظيفة</text>
+  <text x="70" y="100" text-anchor="middle" font-family="Tajawal" font-size="9" fill="#166534">✅ صديقة للبيئة</text>
+  <!-- Non-Renewable -->
+  <rect x="150" y="20" width="120" height="90" rx="14" fill="#fef2f2" stroke="#fca5a5" stroke-width="2"/>
+  <text x="210" y="40" text-anchor="middle" font-family="Tajawal" font-size="10" fill="#991b1b" font-weight="bold">🏭 طاقة غير متجددة</text>
+  <text x="210" y="58" text-anchor="middle" font-size="16">⛽ 🪨</text>
+  <text x="210" y="76" text-anchor="middle" font-family="Tajawal" font-size="9" fill="#991b1b">تنفذ — ملوثة</text>
+  <text x="210" y="100" text-anchor="middle" font-family="Tajawal" font-size="9" fill="#991b1b">❌ تلوث البيئة</text>
+</svg></div>`,
+
+svg_solar:`<div class="svg-wrap">
+<svg viewBox="0 0 280 130" xmlns="http://www.w3.org/2000/svg" style="background:linear-gradient(180deg,#fef9c3,#fef3c7);border-radius:14px">
+  <!-- Sun -->
+  <circle cx="50" cy="50" r="28" fill="#ffb703" opacity="0.9"/>
+  <text x="50" y="56" text-anchor="middle" font-size="18">☀️</text>
+  <!-- Rays -->
+  <line x1="85" y1="40" x2="155" y2="30" stroke="#ffb703" stroke-width="2" opacity="0.6"/>
+  <line x1="85" y1="50" x2="155" y2="50" stroke="#ffb703" stroke-width="2" opacity="0.6"/>
+  <line x1="85" y1="60" x2="155" y2="70" stroke="#ffb703" stroke-width="2" opacity="0.6"/>
+  <!-- Solar panel -->
+  <rect x="155" y="20" width="80" height="60" rx="6" fill="#1e40af"/>
+  <line x1="175" y1="20" x2="175" y2="80" stroke="#3b82f6" stroke-width="1.5"/>
+  <line x1="195" y1="20" x2="195" y2="80" stroke="#3b82f6" stroke-width="1.5"/>
+  <line x1="215" y1="20" x2="215" y2="80" stroke="#3b82f6" stroke-width="1.5"/>
+  <line x1="155" y1="40" x2="235" y2="40" stroke="#3b82f6" stroke-width="1.5"/>
+  <line x1="155" y1="60" x2="235" y2="60" stroke="#3b82f6" stroke-width="1.5"/>
+  <!-- Arrow to bulb -->
+  <path d="M235,50 L250,50" stroke="#ffd700" stroke-width="2" marker-end="url(#a2)"/>
+  <defs><marker id="a2" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 Z" fill="#ffd700"/></marker></defs>
+  <text x="258" y="54" font-size="14">💡</text>
+  <text x="195" y="100" text-anchor="middle" font-family="Tajawal" font-size="10" fill="#1e40af" font-weight="bold">☀️ الخلايا الشمسية تولّد الكهرباء</text>
+  <text x="195" y="115" text-anchor="middle" font-family="Tajawal" font-size="9" fill="#92400e">اشعة الشمس ← لوحة شمسية ← كهرباء 💡</text>
+</svg></div>`,
+
+svg_wind:`<div class="svg-wrap">
+<svg viewBox="0 0 280 140" xmlns="http://www.w3.org/2000/svg" style="background:linear-gradient(180deg,#dbeafe,#eff6ff);border-radius:14px">
+  <!-- Wind lines -->
+  <path d="M10,40 Q40,35 70,40 Q100,45 130,38" stroke="#93c5fd" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <path d="M10,55 Q50,48 90,55 Q120,60 150,52" stroke="#93c5fd" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <path d="M10,70 Q40,65 80,70 Q110,74 140,68" stroke="#bfdbfe" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <!-- Windmill 1 -->
+  <rect x="155" y="80" width="8" height="55" rx="2" fill="#6b7280"/>
+  <g transform="translate(159,80) rotate(30)"><rect x="-3" y="-30" width="6" height="32" rx="3" fill="#3b82f6"/></g>
+  <g transform="translate(159,80) rotate(150)"><rect x="-3" y="-30" width="6" height="32" rx="3" fill="#3b82f6"/></g>
+  <g transform="translate(159,80) rotate(270)"><rect x="-3" y="-30" width="6" height="32" rx="3" fill="#60a5fa"/></g>
+  <circle cx="159" cy="80" r="5" fill="#1d4ed8"/>
+  <!-- Windmill 2 -->
+  <rect x="205" y="90" width="7" height="45" rx="2" fill="#6b7280"/>
+  <g transform="translate(208,90) rotate(60)"><rect x="-2" y="-22" width="5" height="24" rx="3" fill="#2563eb"/></g>
+  <g transform="translate(208,90) rotate(180)"><rect x="-2" y="-22" width="5" height="24" rx="3" fill="#2563eb"/></g>
+  <g transform="translate(208,90) rotate(300)"><rect x="-2" y="-22" width="5" height="24" rx="3" fill="#60a5fa"/></g>
+  <circle cx="208" cy="90" r="4" fill="#1d4ed8"/>
+  <!-- Ground -->
+  <rect x="0" y="130" width="280" height="10" fill="#86efac"/>
+  <text x="140" y="125" text-anchor="middle" font-family="Tajawal" font-size="10" fill="#1d4ed8" font-weight="bold">🌬️ طواحين الرياح توليد الكهرباء</text>
+</svg></div>`,
+
+svg_hydro:`<div class="svg-wrap">
+<svg viewBox="0 0 280 150" xmlns="http://www.w3.org/2000/svg" style="background:linear-gradient(180deg,#e0f2fe,#f0f9ff);border-radius:14px">
+  <!-- Dam -->
+  <polygon points="60,30 100,30 120,140 40,140" fill="#9ca3af"/>
+  <polygon points="100,30 200,30 200,140 120,140" fill="#6b7280"/>
+  <!-- Water behind dam -->
+  <path d="M0,30 Q30,25 60,30 L60,130 L0,130 Z" fill="#0096c7" opacity="0.7"/>
+  <text x="28" y="80" text-anchor="middle" font-family="Tajawal" font-size="9" fill="white">خزان 💧</text>
+  <!-- Water through dam -->
+  <path d="M120,85 Q130,90 140,85 L155,130 L110,130 Z" fill="#00b4d8"/>
+  <!-- Turbine -->
+  <circle cx="175" cy="115" r="18" fill="#1d4ed8" opacity="0.8"/>
+  <text x="175" y="120" text-anchor="middle" font-size="14">⚙️</text>
+  <!-- Wire -->
+  <path d="M193,115 L230,115 L230,90" stroke="#ffd700" stroke-width="2.5" fill="none"/>
+  <text x="242" y="85" font-size="12">💡</text>
+  <text x="230" y="78" text-anchor="middle" font-family="Tajawal" font-size="8" fill="#1d4ed8">كهرباء</text>
+  <text x="140" y="148" text-anchor="middle" font-family="Tajawal" font-size="10" fill="#0c4a6e" font-weight="bold">💧 السد → توربين → كهرباء 💡</text>
+</svg></div>`,
+
+svg_tide:`<div class="svg-wrap">
+<svg viewBox="0 0 280 120" xmlns="http://www.w3.org/2000/svg" style="background:linear-gradient(180deg,#e0f4ff,#bde0fe);border-radius:14px;padding:6px">
+  <!-- Tide UP -->
+  <rect x="10" y="15" width="120" height="80" rx="10" fill="#e0f4ff" stroke="#7dd3fc" stroke-width="2"/>
+  <path d="M20,75 Q40,55 60,65 Q80,75 100,60 Q115,50 120,65 L120,85 L20,85 Z" fill="#0096c7" opacity="0.8"/>
+  <text x="70" y="42" text-anchor="middle" font-size="20">🌊</text>
+  <text x="70" y="55" text-anchor="middle" font-family="Tajawal" font-size="10" fill="#0077b6" font-weight="bold">المد 📈</text>
+  <text x="70" y="67" text-anchor="middle" font-family="Tajawal" font-size="9" fill="#0077b6">ارتفاع المياه</text>
+  <!-- Tide DOWN -->
+  <rect x="150" y="15" width="120" height="80" rx="10" fill="#e0f4ff" stroke="#7dd3fc" stroke-width="2"/>
+  <path d="M160,82 Q180,78 200,80 Q220,82 260,80 L260,92 L160,92 Z" fill="#0096c7" opacity="0.5"/>
+  <text x="210" y="42" text-anchor="middle" font-size="20">🏖️</text>
+  <text x="210" y="55" text-anchor="middle" font-family="Tajawal" font-size="10" fill="#0077b6" font-weight="bold">الجزر 📉</text>
+  <text x="210" y="67" text-anchor="middle" font-family="Tajawal" font-size="9" fill="#0077b6">انحسار المياه</text>
+</svg></div>`,
+
+svg_geo:`<div class="svg-wrap">
+<svg viewBox="0 0 280 140" xmlns="http://www.w3.org/2000/svg" style="border-radius:14px;overflow:hidden">
+  <!-- Sky -->
+  <rect x="0" y="0" width="280" height="60" fill="#87ceeb"/>
+  <!-- Earth layers -->
+  <rect x="0" y="60" width="280" height="30" fill="#8b5e3c"/>
+  <rect x="0" y="90" width="280" height="25" fill="#6b4423"/>
+  <rect x="0" y="115" width="280" height="25" fill="#e11d48"/>
+  <!-- Steam/heat rising -->
+  <path d="M130,60 Q125,45 130,30 Q135,20 130,10" stroke="#e5e7eb" stroke-width="3" fill="none" stroke-linecap="round" opacity="0.8"/>
+  <path d="M145,60 Q148,43 143,28 Q138,15 145,5" stroke="#e5e7eb" stroke-width="2.5" fill="none" stroke-linecap="round" opacity="0.6"/>
+  <path d="M160,60 Q165,45 160,30" stroke="#e5e7eb" stroke-width="2" fill="none" stroke-linecap="round" opacity="0.5"/>
+  <!-- Power plant -->
+  <rect x="85" y="35" width="50" height="30" rx="4" fill="#6b7280"/>
+  <rect x="93" y="25" width="15" height="40" rx="4" fill="#9ca3af"/>
+  <rect x="113" y="30" width="14" height="35" rx="4" fill="#9ca3af"/>
+  <!-- Labels -->
+  <text x="140" y="80" text-anchor="middle" font-family="Tajawal" font-size="9" fill="#fde68a" font-weight="bold">باطن الأرض 🌡️</text>
+  <text x="140" y="100" text-anchor="middle" font-family="Tajawal" font-size="9" fill="#fcd34d">حرارة عالية جداً</text>
+  <text x="140" y="130" text-anchor="middle" font-family="Tajawal" font-size="8" fill="#fef3c7">🌋 طاقة الأرض الجوفية ← كهرباء</text>
+</svg></div>`,
+};
+
+// ══════════════════════════════════════
+//  QUIZ QUESTIONS
+// ══════════════════════════════════════
+const QUESTIONS = [
+  {q:'كم نسبة الماء على سطح الأرض؟', opts:['50%','60%','71%','80%'], c:2, exp:'يشكل الماء نسبة 71% من سطح الأرض! ولهذا يبدو كوكبنا أزرق من الفضاء.'},
+  {q:'ما نوع البحر الذي يتصل بالمحيط مباشرة؟', opts:['البحر المغلق','البحر الداخلي','البحر الخارجي','البحر الجليدي'], c:2, exp:'البحر الخارجي هو الذي يتصل بالمحيط مباشرة.'},
+  {q:'ما نوع البحر المحاط باليابسة من كل جانب؟', opts:['البحر الخارجي','البحر المغلق','البحر الداخلي','بحر التواصل'], c:1, exp:'البحر المغلق محاط باليابسة من كل جانب ولا يتصل بالمحيط.'},
+  {q:'أي من هذه المحيطات هو الأكبر في العالم؟', opts:['المحيط الهندي','المحيط الأطلسي','المحيط الهادي','المحيط القطبي'], c:2, exp:'المحيط الهادي هو الأكبر والأعمق محيط في العالم!'},
+  {q:'ما التقنية المستخدمة لقياس أعماق البحار بالصوت؟', opts:['الرادار','السونار','الليزر','التلسكوب'], c:1, exp:'تقنية السونار تُرسل الصوت وتستقبل صداه من قاع البحر لقياس العمق.'},
+  {q:'ما المصدر الرئيسي للحرارة على سطح الأرض؟', opts:['القمر','الشمس','النجوم','باطن الأرض'], c:1, exp:'الشمس ☀️ هي المصدر الرئيسي للحرارة على سطح الأرض.'},
+  {q:'ما مصدر ملوحة مياه البحار؟', opts:['المطر','أسماك البحر','أملاح صخور القشرة الأرضية','ملح الجبال'], c:2, exp:'تعمل المياه الجارية على إذابة أملاح صخور القشرة الأرضية ونقلها للبحار.'},
+  {q:'ما الطاقة المتجددة؟', opts:['طاقة الفحم','طاقة النفط','طاقة الشمس','طاقة الغاز'], c:2, exp:'الطاقة الشمسية متجددة لأنها من الشمس الدائمة ولا تنفذ ولا تلوث البيئة.'},
+  {q:'ما تأثير حرارة الشمس على دورة الماء؟', opts:['لا تأثير','تجميد الماء','تبخر مياه البحار','إنزال المطر مباشرة'], c:2, exp:'حرارة الشمس هي العامل الرئيسي في تبخر مياه البحار والمحيطات.'},
+  {q:'ماذا نسمي ارتفاع مياه الساحل؟', opts:['الجزر','المد','الفيضان','الموجة'], c:1, exp:'ارتفاع مياه الساحل يسمى المد، وانحسارها يسمى الجزر.'},
+  {q:'لماذا لا يمكن استثمار طاقة الرياح في مناطق السكن؟', opts:['لأن الرياح قوية جداً','لأن المباني تعمل كمصدات تجعل الرياح بطيئة','لأن التكلفة عالية','لأنها تلوث البيئة'], c:1, exp:'المباني تعمل كمصدات للرياح فتجعل سرعتها بطيئة وغير منتظمة.'},
+  {q:'ما مصدر طاقة الأرض الجوفية؟', opts:['أشعة الشمس','الرياح','حرارة باطن الأرض','المياه الجارية'], c:2, exp:'الطاقة الجوفية مستمدة من حرارة باطن الأرض الشديدة.'},
+  {q:'ما الطاقة غير المتجددة؟', opts:['طاقة الشمس','طاقة الرياح','الوقود الأحفوري','الطاقة المائية'], c:2, exp:'الوقود الأحفوري (نفط، فحم، غاز) هو الطاقة غير المتجددة لأنه ينفذ ويلوث.'},
+  {q:'كيف تولّد الطاقة المائية الكهرباء؟', opts:['عبر تسخين الماء','بتدوير التوربينات بقوة الماء الجاري','عبر الأمواج فقط','بتحويل الماء لبخار'], c:1, exp:'الماء الجاري يدور على التوربينات الكبيرة التي تشغل المولدات الكهربائية.'},
+  {q:'ما اليابسة من مجموع سطح الأرض؟', opts:['71%','50%','29%','40%'], c:2, exp:'اليابسة تمثل 29% فقط من سطح الأرض، بينما الماء 71%!'},
+];
+
+// ══════════════════════════════════════
+//  STATE
+// ══════════════════════════════════════
+let S={done:{},streak:0,lastDate:''};
+let curChap=null, curLesson=null, curIdx=0;
+const allL=CURRICULUM.flatMap(c=>c.lessons);
+let qIdx=0, qScore=0, qWrong=0, qAnswered=false;
+
+// Storage
+const _mem={};
+function load(){
+  try{const r=localStorage.getItem('sci5');if(r)S=JSON.parse(r);}catch(e){}
+  renderAll();
+}
+function save(){
+  try{localStorage.setItem('sci5',JSON.stringify(S));}catch(e){_mem['sci5']=JSON.stringify(S);}
+}
+function isDone(id){return!!(S.done&&S.done[id]);}
+
+// ══ TABS ══
+function switchTab(n){
+  ['Home','Lessons','Quiz'].forEach(x=>{const e=document.getElementById('sc'+x);if(e)e.classList.remove('active');});
+  document.getElementById('sc'+n).classList.add('active');
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('tab'+n).classList.add('active');
+  if(n==='Quiz')showQ();
+}
+
+// ══ RENDER HOME ══
+function renderAll(){
+  const done=allL.filter(l=>isDone(l.id)).length;
+  const total=allL.length;
+  const pct=total?Math.round(done/total*100):0;
+  document.getElementById('progBar').style.width=pct+'%';
+  document.getElementById('doneCount').textContent=done;
+  document.getElementById('totalCount').textContent=total;
+  document.getElementById('progPct').textContent=pct+'%';
+
+  document.getElementById('chapsList').innerHTML=CURRICULUM.map((c,i)=>{
+    const cd=c.lessons.filter(l=>isDone(l.id)).length;
+    const cp=Math.round(cd/c.lessons.length*100);
+    return `<div class="chap-card" onclick="openChap('${c.id}')" style="background:${c.bg};animation-delay:${i*.1}s">
+      <span class="cc-emoji">${c.emoji}</span>
+      <div class="cc-info">
+        <div class="cc-name">${c.name}</div>
+        <div class="cc-lessons">📖 ${c.lessons.length} موضوع · ${cd} مكتمل</div>
+        <div class="cc-prog"><div class="cc-prog-fill" style="width:${cp}%"></div></div>
+      </div>
+      <span class="cc-badge">${cp===100?'✅ اكتمل':'%'+cp}</span>
+    </div>`;
+  }).join('');
+}
+
+// ══ CHAPTER ══
+function openChap(id){
+  curChap=CURRICULUM.find(c=>c.id===id);if(!curChap)return;
+  const done=curChap.lessons.filter(l=>isDone(l.id)).length;
+  const pct=Math.round(done/curChap.lessons.length*100);
+  document.getElementById('chapTitle').textContent=curChap.emoji+' '+curChap.name;
+  document.getElementById('chapProgFill').style.width=pct+'%';
+  document.getElementById('chapProgFill').style.background=curChap.accent;
+  document.getElementById('chapProgPct').textContent=pct+'%';
+  document.getElementById('chapProgPct').style.color=curChap.accent;
+  document.getElementById('lessonsList').innerHTML=curChap.lessons.map((l,i)=>`
+    <div class="lesson-row ${isDone(l.id)?'done':''}" onclick="openLesson('${l.id}')" style="animation-delay:${i*.06}s">
+      <div class="lr-num" style="${isDone(l.id)?'':'border-color:'+curChap.accent}">${isDone(l.id)?'✓':(i+1)}</div>
+      <div class="lr-info">
+        <div class="lr-title">${l.emoji} ${l.title}</div>
+        <div class="lr-meta">${isDone(l.id)?'✅ انتهيت منه!':'▶️ اضغط للدراسة'}</div>
+      </div>
+      <div class="lr-arr">›</div>
+    </div>`).join('');
+  switchTab('Lessons');
+}
+function closeChap(){switchTab('Home');}
+
+// ══ LESSON VIEWER ══
+function openLesson(id){
+  curIdx=allL.findIndex(l=>l.id===id);curLesson=allL[curIdx];if(!curLesson)return;
+  renderLesson();
+  document.getElementById('lviewer').classList.add('open');
+  document.getElementById('lviewer').scrollTop=0;
+}
+
+function renderLesson(){
+  const l=curLesson; const done=isDone(l.id);
+  document.getElementById('lvTitle').textContent='موضوع '+(curIdx+1);
+  const db=document.getElementById('lvDoneBtn');
+  db.textContent=done?'✅ فهمته':'✅ فهمت!';
+  db.style.background=done?'#059669':'#22c55e';
+  document.getElementById('lvProgFill').style.width=(((curIdx+1)/allL.length)*100)+'%';
+  document.getElementById('lvProgFill').style.background=curChap?curChap.accent:'#0077b6';
+
+  let h=`<div class="lesson-banner" style="background:${l.banner.bg}">
+    <span style="font-size:60px;display:block;animation:wiggle 2s ease-in-out infinite">${l.emoji}</span>
+    <div class="lb-title">${l.title}</div>
+    <div class="lb-subtitle">${l.banner.subtitle}</div>
+  </div>`;
+
+  l.content.forEach(b=>{
+    if(b.type==='text'){
+      h+=`<div class="blk"><div class="blk-title">${b.title}</div><div class="blk-text">${b.text}</div></div>`;
+    }else if(b.type==='list_star'){
+      h+=`<div class="blk"><div class="blk-title">${b.title}</div><ul class="blk-list">${b.items.map(i=>`<li>${i}</li>`).join('')}</ul></div>`;
+    }else if(b.type==='list_num'){
+      h+=`<div class="blk"><div class="blk-title">${b.title}</div><ul class="blk-list nums">${b.items.map(i=>`<li>${i}</li>`).join('')}</ul></div>`;
+    }else if(b.type==='ill'){
+      h+=`<div class="info-ill" style="background:${b.color};border-color:${b.borderColor}">
+        <span class="ii-icon">${b.icon}</span>
+        <div class="ii-content"><div class="ii-title" style="color:${b.textColor}">${b.title}</div><div class="ii-text">${b.text}</div></div>
+      </div>`;
+    }else if(b.type==='qa'){
+      h+=`<div class="qa-block">
+        <div class="qa-q"><span class="qa-q-badge">سؤال</span>${b.q}</div>
+        <div class="qa-a">✏️ ${b.a}</div>
+      </div>`;
+    }else if(b.type==='highlight'){
+      h+=`<div class="highlight"><span class="hl-icon">${b.icon}</span><div class="hl-text">${b.text}</div></div>`;
+    }else if(SVGS[b.type]){
+      h+=SVGS[b.type];
+    }
+  });
+
+  h+=`<div class="nav-btns">
+    ${curIdx>0?`<button class="nav-prev" onclick="prevL()">← السابق</button>`:''}
+    <button class="nav-next" onclick="markDone()">${done?'✅ التالي ←':'✅ فهمت! التالي →'}</button>
+  </div>`;
+  document.getElementById('lvBody').innerHTML=h;
+}
+
+function markDone(){
+  if(!S.done)S.done={};const was=isDone(curLesson.id);
+  S.done[curLesson.id]=true;save();renderAll();
+  if(!was){
+    const cnt=allL.filter(l=>isDone(l.id)).length;
+    const pct=Math.round(cnt/allL.length*100);
+    document.getElementById('dpEmoji').textContent=pct===100?'🏆':cnt%3===0?'🥳':'⭐';
+    document.getElementById('dpTitle').textContent=pct===100?'أنهيت الكتاب! 🎉':'أحسنت! ⭐';
+    document.getElementById('dpSub').textContent=`أتممت ${cnt} من ${allL.length} موضوعاً! (${pct}%)`;
+    document.getElementById('dpStars').textContent=pct>=80?'⭐⭐⭐':pct>=50?'⭐⭐':'⭐';
+    document.getElementById('dpBtn').textContent=curIdx<allL.length-1?'الموضوع التالي ←':'🏠 الرئيسية';
+    document.getElementById('donePop').classList.add('show');
+  }else nextL();
+}
+function closeDone(){document.getElementById('donePop').classList.remove('show');const hn=curIdx<allL.length-1;if(hn)nextL();else closeLesson();}
+function nextL(){if(curIdx<allL.length-1){curIdx++;curLesson=allL[curIdx];renderLesson();document.getElementById('lviewer').scrollTop=0;}else closeLesson();}
+function prevL(){if(curIdx>0){curIdx--;curLesson=allL[curIdx];renderLesson();document.getElementById('lviewer').scrollTop=0;}}
+function closeLesson(){document.getElementById('lviewer').classList.remove('open');}
+
+// ══ QUIZ ══
+function showQ(){
+  const q=QUESTIONS[qIdx%QUESTIONS.length];
+  document.getElementById('qCurr').textContent=(qIdx%QUESTIONS.length)+1;
+  document.getElementById('qScore').textContent=qScore;
+  document.getElementById('qWrong').textContent=qWrong;
+  document.getElementById('nextQBtn').style.display='none';
+  qAnswered=false;
+  document.getElementById('quizContent').innerHTML=`
+    <div class="q-card">
+      <div class="qc-num">سؤال ${(qIdx%QUESTIONS.length)+1} من ${QUESTIONS.length} 🌟</div>
+      <div class="qc-q">${q.q}</div>
+      <div class="qc-opts">${q.opts.map((o,i)=>`<button class="qc-opt" onclick="ansQ(this,${i},${q.c},'${q.exp.replace(/'/g,"\\'")}')">${o}</button>`).join('')}</div>
+      <div class="qc-result" id="qRes"></div>
+    </div>`;
+}
+function playCorrectSound(){
+  try{
+    const ctx=new (window.AudioContext||window.webkitAudioContext)();
+    for(let i=0;i<6;i++){
+      const buf=ctx.createBuffer(1,ctx.sampleRate*0.06,ctx.sampleRate);
+      const d=buf.getChannelData(0);
+      for(let j=0;j<d.length;j++) d[j]=(Math.random()*2-1)*Math.exp(-j/(ctx.sampleRate*0.025));
+      const src=ctx.createBufferSource();src.buffer=buf;
+      const g=ctx.createGain();
+      g.gain.setValueAtTime(0.4,ctx.currentTime+i*0.1);
+      g.gain.exponentialRampToValueAtTime(0.01,ctx.currentTime+i*0.1+0.06);
+      const f=ctx.createBiquadFilter();f.type='bandpass';f.frequency.value=1200;f.Q.value=0.5;
+      src.connect(f);f.connect(g);g.connect(ctx.destination);
+      src.start(ctx.currentTime+i*0.1);
+    }
+    [523,659,784,1047].forEach((freq,i)=>{
+      const o=ctx.createOscillator(),g=ctx.createGain();
+      o.frequency.value=freq;o.type='sine';
+      g.gain.setValueAtTime(0,ctx.currentTime+0.65+i*0.12);
+      g.gain.linearRampToValueAtTime(0.25,ctx.currentTime+0.65+i*0.12+0.04);
+      g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+0.65+i*0.12+0.25);
+      o.connect(g);g.connect(ctx.destination);
+      o.start(ctx.currentTime+0.65+i*0.12);o.stop(ctx.currentTime+0.65+i*0.12+0.3);
+    });
+  }catch(e){}
+}
+function playWrongSound(){
+  try{
+    const ctx=new (window.AudioContext||window.webkitAudioContext)();
+    [300,220,180].forEach((freq,i)=>{
+      const o=ctx.createOscillator(),g=ctx.createGain();
+      o.type='sawtooth';
+      o.frequency.setValueAtTime(freq,ctx.currentTime+i*0.18);
+      o.frequency.exponentialRampToValueAtTime(freq*0.6,ctx.currentTime+i*0.18+0.2);
+      g.gain.setValueAtTime(0.3,ctx.currentTime+i*0.18);
+      g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+i*0.18+0.22);
+      o.connect(g);g.connect(ctx.destination);
+      o.start(ctx.currentTime+i*0.18);o.stop(ctx.currentTime+i*0.18+0.25);
+    });
+  }catch(e){}
+}
+function ansQ(btn,sel,c,exp){
+  if(qAnswered)return;qAnswered=true;
+  document.querySelectorAll('.qc-opt').forEach((b,i)=>{b.classList.add('dis');if(i===c)b.classList.add('correct');else if(b===btn&&sel!==c)b.classList.add('wrong');});
+  const ok=sel===c;if(ok){qScore++;playCorrectSound();}else{qWrong++;playWrongSound();}
+  document.getElementById('qScore').textContent=qScore;
+  document.getElementById('qWrong').textContent=qWrong;
+  const res=document.getElementById('qRes');
+  res.style.display='block';res.className='qc-result '+(ok?'ok':'no');
+  res.innerHTML=(ok?'🎉 إجابة صحيحة! ممتاز! ':'😊 إجابة خاطئة. ')+exp;
+  document.getElementById('nextQBtn').style.display='block';
+}
+function nextQ(){
+  qIdx++;
+  if(qIdx>=QUESTIONS.length){
+    showResult();
+  } else {
+    showQ();
+  }
+}
+function showResult(){
+  var pct=Math.round((qScore/QUESTIONS.length)*100);
+  var stars = pct>=90?'🌟🌟🌟':pct>=70?'🌟🌟':pct>=50?'🌟':'';
+  var msg = pct>=90?'ممتاز! أنت نجم العلوم ⭐':pct>=70?'جيد جداً! استمر 💪':pct>=50?'جيد، راجع المادة 📚':'راجع الدروس وحاول مجدداً 🔄';
+  document.getElementById('quizContent').innerHTML=
+    '<div style="text-align:center;padding:20px">'
+    +'<div style="font-size:60px;margin-bottom:12px">'+stars+'</div>'
+    +'<div style="font-size:28px;font-weight:900;color:#0077b6;margin-bottom:8px">'+pct+' / 100</div>'
+    +'<div style="font-size:16px;color:#444;margin-bottom:6px">'+qScore+' إجابة صحيحة من '+QUESTIONS.length+'</div>'
+    +'<div style="font-size:14px;color:#666;margin-bottom:20px">'+msg+'</div>'
+    +'<button onclick="restartQuiz()" style="background:#0077b6;color:#fff;border:none;border-radius:14px;padding:14px 32px;font-family:Tajawal,Arial,sans-serif;font-size:16px;font-weight:900;cursor:pointer">🔄 أعد الاختبار</button>'
+    +'</div>';
+  document.getElementById('nextQBtn').style.display='none';
+}
+function restartQuiz(){
+  qIdx=0;qScore=0;qWrong=0;qAnswered=false;
+  document.getElementById('qScore').textContent='0';
+  document.getElementById('qWrong').textContent='0';
+  showQ();
+}
+
+if(document.readyState==='loading'){
+  document.addEventListener('DOMContentLoaded',load);
+}else{
+  setTimeout(load,100);
+}
+</script>
+</body>
+</html>
