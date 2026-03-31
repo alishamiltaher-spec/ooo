@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<title>التوبة 🌿</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --green:#2d7a4f;--green2:#4caf78;--green3:#a8e6c0;
+  --gold:#f4c430;--gold2:#ffdd57;
+  --sky:#e8f8f0;--white:#fff;
+  --text:#1a3a2a;--muted:#5a7a6a;
+  --pink:#ff8fa3;--blue:#7ec8e3;--orange:#ffb347;--purple:#c3a6ff;
+}
+html,body{height:100%;font-family:Tahoma,Arial,sans-serif;background:var(--sky);}
+body{display:flex;flex-direction:column;min-height:100vh;overflow-x:hidden;}
+
+/* ── ANIMATED BG ── */
+.bg-wrap{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none;}
+.cloud{position:absolute;background:#fff;border-radius:50px;opacity:.7;animation:drift linear infinite;}
+.cloud::before,.cloud::after{content:'';position:absolute;background:#fff;border-radius:50%;}
+.c1{width:90px;height:30px;top:8%;animation-duration:18s;animation-delay:-4s;}
+.c1::before{width:40px;height:40px;top:-20px;right:10px;}
+.c1::after{width:30px;height:30px;top:-14px;right:35px;}
+.c2{width:120px;height:38px;top:18%;animation-duration:24s;animation-delay:-10s;}
+.c2::before{width:55px;height:55px;top:-28px;right:15px;}
+.c2::after{width:40px;height:40px;top:-20px;right:50px;}
+.c3{width:70px;height:24px;top:30%;animation-duration:20s;animation-delay:-7s;}
+.c3::before{width:35px;height:35px;top:-18px;right:8px;}
+.c3::after{width:25px;height:25px;top:-12px;right:30px;}
+@keyframes drift{from{transform:translateX(-200px);}to{transform:translateX(110vw);}}
+
+/* Stars/sparkles */
+.spark{position:absolute;font-size:18px;animation:twinkle 3s ease-in-out infinite;}
+@keyframes twinkle{0%,100%{opacity:.2;transform:scale(.8);}50%{opacity:1;transform:scale(1.3);}}
+
+/* ── HEADER ── */
+.hdr{
+  position:relative;z-index:10;
+  background:linear-gradient(145deg,var(--green) 0%,var(--green2) 60%,#6dcf99 100%);
+  padding:20px 16px 28px;text-align:center;
+  border-radius:0 0 40px 40px;
+  box-shadow:0 6px 24px rgba(45,122,79,.3);
+  overflow:hidden;
+}
+.hdr::before{content:'🌿';position:absolute;left:-10px;top:-5px;font-size:80px;opacity:.15;transform:rotate(-20deg);}
+.hdr::after{content:'🌿';position:absolute;right:-10px;bottom:-10px;font-size:80px;opacity:.15;transform:rotate(20deg) scaleX(-1);}
+
+.title-badge{
+  display:inline-block;background:rgba(255,255,255,.2);
+  border:2px solid rgba(255,255,255,.4);
+  border-radius:99px;padding:4px 18px;
+  font-size:12px;color:rgba(255,255,255,.9);margin-bottom:10px;
+}
+.main-title{font-size:32px;font-weight:900;color:#fff;text-shadow:0 3px 10px rgba(0,0,0,.2);margin-bottom:6px;}
+.subtitle{font-size:14px;color:rgba(255,255,255,.85);}
+
+/* Character */
+.char-wrap{margin:10px 0 0;position:relative;display:inline-block;}
+.char{font-size:72px;display:inline-block;animation:charFloat 3s ease-in-out infinite;}
+@keyframes charFloat{0%,100%{transform:translateY(0) rotate(-3deg);}50%{transform:translateY(-12px) rotate(3deg);}}
+.char-stars{position:absolute;top:-5px;right:-15px;font-size:20px;animation:twinkle 1.5s ease-in-out infinite;}
+
+/* ── HADITH CARD ── */
+.hadith-card{
+  position:relative;z-index:10;
+  margin:20px 16px;
+  background:#fff;border-radius:24px;
+  padding:20px;
+  box-shadow:0 6px 24px rgba(45,122,79,.12);
+  border:3px solid var(--green3);
+  text-align:center;
+  overflow:hidden;
+}
+.hadith-card::before{content:'';position:absolute;top:0;left:0;right:0;height:6px;background:linear-gradient(90deg,var(--green),var(--gold),var(--green2));}
+.hc-label{font-size:11px;font-weight:700;color:var(--muted);background:var(--sky);border-radius:99px;padding:3px 14px;display:inline-block;margin-bottom:12px;}
+.hc-arabic{font-size:20px;font-weight:900;color:var(--green);line-height:1.8;margin-bottom:10px;}
+.hc-arabic span{color:var(--gold);background:linear-gradient(135deg,#fff8dc,#fff3b0);padding:2px 10px;border-radius:8px;font-size:22px;}
+.hc-source{font-size:12px;color:var(--muted);margin-top:8px;}
+.hc-deco{font-size:28px;margin:4px 0;}
+
+/* ── QUESTIONS ── */
+.section-title{
+  position:relative;z-index:10;
+  font-size:14px;font-weight:900;color:var(--green);
+  margin:4px 16px 12px;
+  display:flex;align-items:center;gap:8px;
+}
+.section-title::after{content:'';flex:1;height:2px;background:linear-gradient(90deg,var(--green3),transparent);}
+
+.qa-list{position:relative;z-index:10;padding:0 16px;}
+
+.qa-item{
+  background:#fff;border-radius:20px;margin-bottom:12px;
+  overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,.06);
+  border:2px solid transparent;
+  transition:all .3s;
+  animation:slideUp .4s ease both;
+}
+@keyframes slideUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+.qa-item:active{transform:scale(.98);}
+
+.qa-q{
+  display:flex;align-items:center;gap:10px;
+  padding:14px 14px;cursor:pointer;
+  background:linear-gradient(135deg,#f0fdf6,#e8f8f0);
+}
+.qa-num{
+  width:32px;height:32px;border-radius:50%;
+  background:linear-gradient(135deg,var(--green),var(--green2));
+  color:#fff;font-size:13px;font-weight:900;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.qa-q-text{font-size:14px;font-weight:700;color:var(--text);flex:1;line-height:1.5;}
+.qa-arrow{font-size:14px;color:var(--green2);transition:transform .3s;flex-shrink:0;}
+.qa-item.open .qa-arrow{transform:rotate(90deg);}
+
+.qa-a{
+  display:none;padding:12px 14px 14px;
+  border-top:2px dashed var(--green3);
+  background:#fff;
+}
+.qa-item.open .qa-a{display:block;animation:fadeIn .25s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(-6px);}to{opacity:1;transform:translateY(0);}}
+.qa-a-text{font-size:13px;line-height:2;color:#334155;}
+.qa-a-text .aya{
+  display:block;text-align:center;font-size:16px;font-weight:900;
+  color:var(--green);background:linear-gradient(135deg,#f0fdf6,#e8f8f0);
+  padding:10px;border-radius:12px;margin:8px 0;
+  border-right:4px solid var(--green2);
+}
+.qa-a-text .ref{font-size:11px;color:var(--green2);font-weight:700;}
+.qa-a-text .hadith-txt{
+  display:block;text-align:center;font-size:15px;font-weight:900;
+  color:#b45309;background:linear-gradient(135deg,#fffbeb,#fef3c7);
+  padding:10px;border-radius:12px;margin:8px 0;
+  border:2px solid var(--gold);
+}
+
+/* ── BOTTOM DECO ── */
+.bottom-deco{position:relative;z-index:10;text-align:center;padding:20px 16px 30px;font-size:28px;}
+.bd-msg{font-size:13px;font-weight:700;color:var(--muted);margin-top:6px;}
+
+/* Floating leaves */
+.leaf{position:fixed;font-size:22px;animation:leafFall linear infinite;pointer-events:none;z-index:1;opacity:.6;}
+@keyframes leafFall{0%{transform:translateY(-30px) rotate(0deg);opacity:.6;}100%{transform:translateY(110vh) rotate(360deg);opacity:0;}}
+</style>
+</head>
+<body>
+
+<!-- BG -->
+<div class="bg-wrap">
+  <div class="cloud c1" style="left:-100px"></div>
+  <div class="cloud c2" style="left:-150px;animation-delay:-14s"></div>
+  <div class="cloud c3" style="left:-80px;animation-delay:-2s"></div>
+  <span class="spark" style="top:12%;right:8%;animation-delay:0s">⭐</span>
+  <span class="spark" style="top:6%;left:12%;animation-delay:.8s">✨</span>
+  <span class="spark" style="top:22%;right:20%;animation-delay:1.5s">🌟</span>
+  <span class="spark" style="top:15%;left:30%;animation-delay:.4s">⭐</span>
+</div>
+
+<!-- Floating leaves -->
+<span class="leaf" style="right:5%;animation-duration:8s;animation-delay:0s;font-size:18px">🍃</span>
+<span class="leaf" style="right:25%;animation-duration:12s;animation-delay:-4s;font-size:14px">🌿</span>
+<span class="leaf" style="right:60%;animation-duration:10s;animation-delay:-7s;font-size:16px">🍃</span>
+<span class="leaf" style="right:80%;animation-duration:9s;animation-delay:-2s;font-size:12px">🌿</span>
+
+<!-- HEADER -->
+<div class="hdr">
+  <div class="title-badge">📖 من الحديث الشريف</div>
+  <div class="main-title">التـوبـة 🌿</div>
+  <div class="subtitle">نتعلم معاً عن التوبة والرجوع إلى الله</div>
+  <div class="char-wrap">
+    <span class="char">🧒</span>
+    <span class="char-stars">✨</span>
+  </div>
+</div>
+
+<!-- HADITH -->
+<div class="hadith-card">
+  <div class="hc-label">🌸 الحديث الشريف</div>
+  <div class="hc-deco">🌿 ❀ 🌿</div>
+  <div class="hc-arabic">
+    قال رسول الله ﷺ :<br>
+    <span>« ليسَ شيءٌ أحبُّ إلى اللهِ تعالى من مؤمنٍ تائب »</span>
+  </div>
+  <div class="hc-source">صدق رسول الله ﷺ</div>
+</div>
+
+<!-- QUESTIONS -->
+<div class="section-title">🌼 أسئلة وأجوبة</div>
+
+<div class="qa-list">
+
+  <div class="qa-item" style="animation-delay:.05s" onclick="toggle(this)">
+    <div class="qa-q">
+      <div class="qa-num">١</div>
+      <div class="qa-q-text">اذكر حديثاً نبوياً يتحدث عن التوبة؟</div>
+      <span class="qa-arrow">›</span>
+    </div>
+    <div class="qa-a">
+      <div class="qa-a-text">
+        قال رسول الله ﷺ :
+        <span class="hadith-txt">« ليسَ شيءٌ أحبُّ إلى اللهِ تعالى من مؤمنٍ تائب »</span>
+        <span class="ref">صدق رسول الله ﷺ</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="qa-item" style="animation-delay:.1s" onclick="toggle(this)">
+    <div class="qa-q">
+      <div class="qa-num">٢</div>
+      <div class="qa-q-text">لماذا حرَّم الله تعالى بعض الأشياء والأعمال؟</div>
+      <span class="qa-arrow">›</span>
+    </div>
+    <div class="qa-a">
+      <div class="qa-a-text">
+        حرَّمها علينا لأنها <strong>ضارة بالمجتمع والفرد والدولة</strong> 🏡<br>
+        الله يحبنا ويريد لنا الأفضل دائماً 💚
+      </div>
+    </div>
+  </div>
+
+  <div class="qa-item" style="animation-delay:.15s" onclick="toggle(this)">
+    <div class="qa-q">
+      <div class="qa-num">٣</div>
+      <div class="qa-q-text">لماذا أوجب الله تعالى الواجبات الدينية؟</div>
+      <span class="qa-arrow">›</span>
+    </div>
+    <div class="qa-a">
+      <div class="qa-a-text">
+        أمرنا الله بالصلاة والصوم والزكاة وأداء الأمانة وبر الوالدين وتحقيق العدالة بين الناس وحفظ الأمن،
+        وذلك <strong>لوجود مصلحة ومنفعة للإنسان فيها</strong> 🌟
+      </div>
+    </div>
+  </div>
+
+  <div class="qa-item" style="animation-delay:.2s" onclick="toggle(this)">
+    <div class="qa-q">
+      <div class="qa-num">٤</div>
+      <div class="qa-q-text">ما التوبة؟</div>
+      <span class="qa-arrow">›</span>
+    </div>
+    <div class="qa-a">
+      <div class="qa-a-text">
+        هي <strong>ترك المعصية وعدم فعلها مرةً أخرى</strong>،<br>
+        وتبدأ التوبة بـ:
+        <br>🔸 <strong>الندم</strong> على ما فعلت
+        <br>🔸 <strong>الاستغفار</strong> والدعاء
+        <br>🔸 <strong>عدم تكرار</strong> المعصية مرة أخرى 💚
+      </div>
+    </div>
+  </div>
+
+  <div class="qa-item" style="animation-delay:.25s" onclick="toggle(this)">
+    <div class="qa-q">
+      <div class="qa-num">٥</div>
+      <div class="qa-q-text">ما فائدة التوبة؟</div>
+      <span class="qa-arrow">›</span>
+    </div>
+    <div class="qa-a">
+      <div class="qa-a-text">
+        إن التوبة تساعد الإنسان الخاطئ على:<br>
+        🌱 <strong>إصلاح نفسه</strong><br>
+        🌱 <strong>ترك الأعمال السيئة</strong><br><br>
+        فنصبح أفضل وأسعد! 😊
+      </div>
+    </div>
+  </div>
+
+  <div class="qa-item" style="animation-delay:.3s" onclick="toggle(this)">
+    <div class="qa-q">
+      <div class="qa-num">٦</div>
+      <div class="qa-q-text">اذكر آية تتحدث عن التوبة</div>
+      <span class="qa-arrow">›</span>
+    </div>
+    <div class="qa-a">
+      <div class="qa-a-text">
+        قال الله تعالى:
+        <span class="aya">﴿ إِنَّ اللَّهَ يُحِبُّ التَّوَّابِينَ وَيُحِبُّ الْمُتَطَهِّرِينَ ﴾</span>
+        <span class="ref">[ سورة البقرة : ٢٢٢ ]</span>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- BOTTOM -->
+<div class="bottom-deco">
+  🌿 🤲 🌿
+  <div class="bd-msg">نسأل الله أن يجعلنا من التوابين 💚</div>
+</div>
+
+<script>
+function toggle(el){
+  const wasOpen = el.classList.contains('open');
+  document.querySelectorAll('.qa-item').forEach(i=>i.classList.remove('open'));
+  if(!wasOpen) el.classList.add('open');
+}
+</script>
+</body>
+</html>
